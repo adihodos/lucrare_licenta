@@ -1,0 +1,141 @@
+namespace gfx {
+
+template<typename real_t>
+class vector4 {
+public :
+    typedef real_t          element_type;
+    typedef real_t&         reference;
+    typedef const real_t&   const_reference;
+    typedef vector4<real_t> vector4_t;
+  union {
+    struct {
+      real_t x_;
+      real_t y_;
+      real_t z_;
+      real_t w_;
+    };
+    real_t elements_[4];   ///< Array like access to the vector's elements */
+  };
+
+    vector4() {}
+
+    vector4(real_t x, real_t y, real_t z, real_t w);
+        
+    inline
+    vector4(
+        const real_t* inputs, 
+        size_t count
+        );
+
+    static 
+    inline 
+    vector4<real_t> 
+    as_affine_point(
+        const gfx::vector3<real_t>& pt
+        );
+
+    static 
+    inline 
+    vector4<real_t> 
+    as_affine_vector(
+        const gfx::vector3<real_t>& v
+        );
+
+    static
+    inline
+    vector4<real_t>
+    as_homogeneous_point(
+        const gfx::vector3<real_t>& pt,
+        real_t w
+        );
+
+    inline
+    vector4<real_t>& 
+    operator+=(
+        const vector4<real_t>& rhs
+        );
+
+    inline
+    vector4<real_t>& 
+    operator-=(
+        const vector4<real_t>& rhs
+        );
+
+    inline
+    vector4<real_t>& 
+    operator*=(
+        real_t k
+        );
+
+    inline
+    vector4<real_t>&
+    operator/=(
+        real_t k
+        );
+
+    inline
+    real_t
+    sum_components_squared() const;
+
+    inline
+    real_t
+    magnitude() const;
+
+    inline
+    vector4<real_t>& 
+    normalize();
+};
+
+template<typename real_t>
+inline
+gfx::vector4<real_t>
+operator+(
+    const gfx::vector4<real_t>& lhs,
+    const gfx::vector4<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector4<real_t>
+operator-(
+    const gfx::vector4<real_t>& lhs,
+    const gfx::vector4<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector4<real_t>
+operator*(
+    real_t k,
+    const gfx::vector4<real_t>& vec
+    );
+
+template<typename real_t>
+inline
+gfx::vector4<real_t>
+operator*(
+    const gfx::vector4<real_t>& vec,
+    real_t k
+    );
+
+template<typename real_t>
+inline
+gfx::vector4<real_t>
+operator/(
+    const gfx::vector4<real_t>& vec,
+    real_t k
+    );
+
+template<typename real_t>
+inline
+real_t
+dot_product(
+    const gfx::vector4<real_t>& lhs, 
+    const gfx::vector4<real_t>& rhs
+    );
+
+typedef vector4<float>      vector4F;
+
+typedef vector4<double>     vector4D;
+
+} // namespace gfx

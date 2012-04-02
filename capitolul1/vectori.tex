@@ -1,0 +1,376 @@
+\section{Vectori}
+\label{ch1:sec_vectors}
+\indent
+
+Vectorii au o importanță fundamentală pentru orice aplicație 3D. Ei sunt
+utilizați pentru a reprezenta puncte in spațiu, precum locațiile obiectelor sau
+verticele unei meșe de triunghiuri. De asemenea sunt utilizați pentru a
+reprezenta direcții în spațiu, precum orientarea camerei sau normalii la
+suprafață ai unei meșe de triunghiuri.
+
+\subsection{Proprietățile vectorilor}
+\label{ch1:sec_vectors:sub_properties}
+\indent 
+
+Deși sunt posibile definiții mai abstracte, ne vom concentra asupra vectorilor
+definiți prin \textit{n}-tuple de numere reale, unde \textit{n} este de obicei
+2, 3 sau 4. Un vector \textit{n}-dimensional \textbf{V} poate fi scris ca
+\begin{equation}
+\label{eq:vec:1}
+\mathbf{V} = \langle V_1, V_2, \dots V_n \rangle,
+\end{equation}  unde numerele $\mathit{V_i}$ se numesc componentele vectorului
+\textbf{V}.
+Vectorul din ecuația \eqref{eq:vec:1} poate fi reprezentat și printr-o matrice
+cu o singură coloană și \textit{n} linii :
+\begin{equation}
+\label{eq:vec:2}
+\mathbf{V} = 
+\begin{bmatrix}
+V_1 \\
+V_2 \\
+\vdots \\
+V_n
+\end{bmatrix}.
+\end{equation} 
+În mod normal vectorii vor fi exprimați în acest fel, uneori însă apare nevoia
+de a exprima un vector ca și o matrice cu o singură linie și \textit{n} coloane.
+Vom scrie un vector linie ca și transpusul vectorului coloană corespunzător :
+\begin{equation}
+\label{eq:vec:3}
+\mathbf{V^T} = 
+\begin{bmatrix}
+V_1, \quad V_2, \quad \dots \quad V_n
+\end{bmatrix}.
+\end{equation}
+
+\indent
+ Un vector poate fi multiplicat cu un scalar pentru a produce un
+nou vector ale cărui componente au aceeași proporție relativă. Produsul dintre
+scalarul \textit{a} și vectorul \textbf{V} este definit ca :
+\begin{equation}
+\label{eq:vec:4}
+\mathit{a}\mathbf{V} = \mathbf{V}\mathit{a} = \langle \mathit{a}V_1, \quad
+\mathit{a}V_2, \quad \dots \quad \mathit{a}V_n \rangle.
+\end{equation}
+
+\indent
+Vectorii se adună și se scad pe componente. Dîndu-se doi vectori \textbf{P} și
+\textbf{Q}, definim suma lor \textbf{P + Q} ca :
+\begin{equation}
+\label{eq:vec:5}
+\mathbf{P + Q} = \langle P_1 + Q_1, \quad P_2 + Q_2 \quad \dots \quad P_n + Q_n
+\rangle.
+\end{equation}
+Diferența a doi vectori, scrisă ca și \textbf{P - Q} este doar o simplificare a
+notației pentru suma \textbf{P + (-Q)}.\\
+Vom examina acum cîteva proprietăți fundamentale ale aritmeticii cu vectori.
+
+%\theoremstyle{definition} 
+\newtheorem{vector_arith}{Teorema}
+
+\begin{vector_arith}
+Oricare ar fi doi scalari \textit{a} și \textit{b} cu \textit{a}, \textit{b}
+$\in \mathbf{R}$ și oricare trei vectori \textbf{P, Q, R} cu $\mathbf{P},
+\mathbf{Q}, \mathbf{R} \in \mathbf{R^n}$, următoarele proprietăți sunt
+adevărate.
+\begin{enumerate}
+  \item $\mathbf{P + Q = Q + P}$ - adunarea este este comutativă.
+  \item $\mathbf{(P + Q) + R = P + (Q + R)}$ - adunarea este asociativă.
+  \item $\mathit{(ab)}\mathbf{P} = \mathit{a(b}\mathbf{P}\mathit{)}$ -
+  asociativitatea înmulțirii cu scalari.
+  \item $\mathit{a(\mathbf{P + Q})} = \mathit{a}\mathbf{Q} +
+  \mathit{b}\mathbf{Q}$ - înmulțirea cu scalari este distributivă față de
+  adunarea vectorilor.
+  \item $\mathit{(a + b)}\mathbf{P} = \mathit{a}\mathbf{P} +
+  \mathit{b}\mathbf{P}$ - înmulțirea vectorilor este distributivă față de
+  adunarea scalarilor.
+\end{enumerate}
+\end{vector_arith}
+
+\indent
+\textit{Magnitudinea} unui vector \textit{n}-dimensional \textbf{B} este un
+scalar notat cu $\Vert \mathbf{V} \Vert$ și este dat de formula :
+\begin{equation}
+\label{eq:vec:6}
+\Vert \mathbf{V} \Vert = \sqrt{\sum_{i = 1}^{n} V_i^2}.
+\end{equation}
+Magnitudinea unui vector se mai numește și \textit{norma} sau \textit{lungimea}
+unui vector. Un vector cu o magnitudine de unu se spune ca are \textit{lungime
+unitate}, sau că este un \textit{vector unitate}. Atunci cînd \textbf{V}
+reprezintă un vector din $\mathbf{R^3}$, equația \eqref{eq:vec:6} poate fi
+scrisă ca :
+\begin{equation}
+\label{eq:vec:7}
+\Vert \mathbf{V} \Vert = \sqrt{V_x^2 + V_y^2 + V_z^2}.
+\end{equation}
+
+\indent
+Un vector care are cel puțin o componentă non-zero poate fi redimensionat la
+lungimea unitate prin multiplicare cu $\frac{1}{\Vert \mathbf{V} \Vert}$.
+Această operație se mai numește și normalizare.
+
+\indent
+Magnitudinea unui vector are următoarele proprietăți.
+\newtheorem{mag_vectors}[vector_arith]{Teorema}
+\begin{mag_vectors}
+Oricare ar fi scalarul $\mathit{a} \in \mathbf{R}$ și oricare ar fi doi vectori
+$\mathbf{P, Q} \in \mathbf{R^n}$, următoarele proprietăți sunt adevărate.
+\begin{enumerate}
+  \item $\Vert \mathbf{P} \Vert \geq 0$
+  \item $\Vert \mathbf{P} \Vert = 0 \iff \mathbf{P} = \langle 0, \quad 0, \quad
+  \dots \quad 0 \rangle$
+  \item $\Vert \mathit{a}\mathbf{P} \Vert = \vert \mathit{a} \vert \Vert
+  \mathbf{P} \Vert$
+  \item $\Vert \mathbf{P + Q} \Vert \leq \Vert \mathbf{P} \Vert + \Vert
+  \mathbf{Q} \Vert$
+\end{enumerate}
+\end{mag_vectors}
+
+\newpage
+\subsection{Produs scalar}
+\label{ch1:sec_vectors:dot_product}
+\indent
+
+\textit{Produsul scalar} a doi vectori, numit si \textit{produs interior}, este
+una din cele mai folosite operații într-o aplicație 3D deoarere furnizează o
+măsură a diferenței dintre direcțiile a doi vectori.
+\newtheorem{def_dotproduct}{Definiția}
+\begin{def_dotproduct}
+Fiind dați doi vectori \textit{n}-dimensionali \textbf{P} și \textbf{Q},
+produsul scalar al acestora, notat cu $\mathbf{P} \cdot \mathbf{Q}$, este
+numărul real dat de formula
+\begin{equation}
+\label{eq:vec:8}
+\mathbf{P} \cdot \mathbf {Q} = \sum_{i = 1}^{n} P_iQ_i.
+\end{equation}
+\end{def_dotproduct}
+Această definiție spune că produsul scalar a doi vectori este dat de suma
+produselor componentelor vectorilor. In $\mathbf{R^3}$ avem
+\begin{equation}
+\label{eq:vec:9}
+\mathbf{P \cdot Q} = P_xQ_x + P_yQ_y + P_zQ_z.
+\end{equation}
+Produsul scalar mai poate fi exprimat și ca un produs de două matrici
+\begin{equation}
+\label{eq:vec:10}
+\mathbf{P^TQ} = [P_1 \quad P_2 \quad \dots \quad P_n]
+\begin{bmatrix}
+Q_1 \\
+Q_2 \\
+\vdots \\
+Q_n
+\end{bmatrix},
+\end{equation}
+
+\newtheorem{dotproduct_cosine}[vector_arith]{Teorema}
+\begin{dotproduct_cosine}
+Fiind dați doi vectori \textit{n}-dimensionali \textbf{P} și \textbf{Q},
+produsul lor scalar $\mathbf{P \cdot Q}$ satisface equația
+\begin{equation}
+\label{eq:vec:11}
+\mathbf{P \cdot Q} = \Vert P \Vert \Vert Q \Vert \cos \alpha,
+\end{equation}
+unde $\alpha$ este unghiul dintre cei doi vectori.
+\end{dotproduct_cosine}
+Din această teoremă rezultă că doi vectori sunt perpendiculari dacă și numai
+dacă produsul lor scalar este zero (funcția cosinus este zero la un unghi de 90
+de grade). Pe baza semnului produsului scalar se poate face o observație legată
+de cît de mult cei doi vectori indică direcții similare. Dacă considerăm un plan
+care trece prin origine și care este perpendicular pe vectorul respectiv, atunci
+orice vector care se situează pe aceeași parte a planului cu vectorul inițial va
+avea un produs scalar pozitiv cu el și viceversa.
+
+\newtheorem{dotproduct_properties}[vector_arith]{Teorema}
+\begin{dotproduct_properties}
+Dînduse un scalar \textbf{a} și trei vectori \textbf{P, Q, R}, următoarele
+proprietăți sunt adevărate.
+\begin{enumerate}
+  \item $\mathbf{P \cdot Q} = \mathbf{Q \cdot P}$ (comutativitatea produsului
+  scalar)
+  \item $(\mathit{a}\mathbf{P}) \cdot \mathbf{Q} = \mathit{a}(\mathbf{P \cdot
+  Q})$ (asociativitatea înmulțirii cu scalari)
+  \item $\mathbf{P} \cdot (\mathbf{Q + R}) = \mathbf{P \cdot Q + P \cdot R} $
+  (distributivitatea produsului scalar față de adunarea vectorilor)
+  \item $\mathbf{P \cdot P} = \Vert \mathbf{P} \Vert ^ 2$
+  \item $\mathbf{\vert P \cdot Q \vert} \leq \Vert P \Vert \Vert Q \Vert$
+\end{enumerate}
+\end{dotproduct_properties}
+
+Deseori apare situația în care trebuie să descompunem un vector \textbf{P} în
+componente care sunt paralele și perpendiculare cu un alt vector \textbf{Q}
+\todo{inserat figura + restul de formule care vin aici}
+
+\subsection{Produs vectorial}
+\label{ch1:sec_vectors:cross_product}
+\indent
+
+\textit{Produsul vectorial} a doi vectori tridimensionali întoarce un vector
+care este perpendicular pe cei voi vectori multiplicați. Această proprietate are
+multe utilizări într-o aplicație 3D, una din ele fiind o metodă de a calcula
+normalul la suprafață intr-un anumit punct al ei, dîndu-se doi vectori distincți
+și tangenți.
+
+\newtheorem{crossproduct_def}[vector_arith]{Definiția}
+\begin{crossproduct_def}
+Se numește produs vectorial a doi vectori tridimensionali \textbf{P, Q} și se
+notează cu \textbf{P $\times$ Q}, vectorul dat de formula
+\begin{equation}
+\label{eq:vec:12}
+\mathbf{P \times Q} = \langle P_yQ_z - P_zQ_y, P_zQ_x - P_xQ_z, P_xQ_y - P_yQ_x
+\rangle.
+\end{equation}
+\end{crossproduct_def}
+O metodă utilă pentru reținerea acestei formule este de a calcula produsul
+vectorial prin evaluarea pseudo-determinantului
+\begin{equation}
+\begin{vmatrix}
+i & j & k \\
+P_x & P_y & P_z \\
+Q_x & Q_y & Q_z
+\end{vmatrix},
+\end{equation} unde \textit{i}, \textit{j}, \textit{k} sunt vectorii unitate
+paraleli cu axele \textit{Ox, Oy, Oz}.
+
+\indent
+Ca și produsul scalar, produsul vectorial are semnificație trigonometrică.
+
+\newtheorem{crossproduct_trig}[vector_arith]{Teorema}
+\begin{crossproduct_trig}
+Oricare ar fi doi vectori $\mathbf{P, Q \in R^3}$, produsul vectorial
+$\mathbf{P \times Q}$ verifică ecuația
+\begin{equation}
+\label{eq:vec:13}
+\Vert P \times Q \Vert = \Vert P \Vert \Vert Q \Vert \sin \alpha,
+\end{equation} unde $\alpha$ reprezintă unghiul dintre vectorii \textbf{P, Q}.
+\end{crossproduct_trig}
+\todo {figura de inserat aici}
+
+Ca și o consecință, aria unui triunghi arbitrar ale cărui vertice sunt
+date de punctele $\mathbf{V_0, V_1, V_2}$ poate fi calculată după formula
+\begin{equation}
+\label{eq:vec:cross_tri_area}
+A = \frac{1}{2} \Vert (V_1 - V_0) \times (V_2 - V_0) \Vert
+\end{equation}
+
+\newtheorem{crossproduct_properties}[vector_arith]{Teorema}
+\begin{crossproduct_properties}
+\label{cross_properties}
+Oricare ar fi doi scalari $\mathit{a, b} \in \mathbf{R}$ si oricare trei vectori
+$\mathbf{P, Q, R} \in \mathbf{R^3}$, următoarele proprietăți sunt verificate.
+\begin{enumerate}
+  \item $Q \times P = -(P \times Q)$ (anticomutativitate)
+  \item $(\mathit{a}P) \times Q = \mathit{a}(P \times Q)$
+  \item $P \times (Q + R) = P \times Q + P \times R$
+  \item $P \times P = \langle 0, \quad 0, \quad 0 \rangle$
+  \item $\Vert P \times Q \Vert ^ 2 = \Vert P \Vert ^ 2 \Vert Q \Vert ^ 2 - (P
+  \cdot Q) ^ 2$ (identitatea Lagrange)
+  \item produsul vectorial a doi vectori este nul dacă și numai dacă cei doi
+  vectori sunt coliniari; dacă vectorii nu sunt coliniari, atunci norma
+  produsului vectorial este egală cu aria paralelogramului construit pe
+  reprezentanții cu origine comună ai celor doi vectori.
+\end{enumerate}
+\end{crossproduct_properties}
+
+Ca și o consecință a teoremei \ref{cross_properties}, punctul 6, 
+aria unui triunghi arbitrar ale cărui vertice sunt date de punctele
+$\mathbf{V_0, V_1, V_2}$ poate fi calculată după formula
+\begin{equation}
+\label{eq:vec:cross_tri_area}
+A = \frac{1}{2} \Vert (V_1 - V_0) \times (V_2 - V_0) \Vert
+\end{equation}
+
+\subsection{Dublu produs vectorial}
+\label{ch1:sec_vectors:sub_double_cross_product}
+\indent
+
+Fiind dați vectorii $\mathbf{P, Q, R}$, vectorul \textbf{W} = $\mathbf{P
+\times (Q \times R)}$ este dublul produs vectorial al acestor vectori.
+Expresia dublului produs vectorial se reține mai ușor scrisă sub forma
+pseudo-determinantului
+\begin{equation}
+\label{eq:vec:double_vector_product}
+\mathbf{P \times (Q \times R)} = 
+\begin{vmatrix}
+Q & R \\
+(P, Q) & (P, R)
+\end{vmatrix}.
+\end{equation}
+
+\subsection{Produs mixt}
+\label{ch1:sec_vectors:sub_mixed_product}
+\indent
+
+Fiind dați vectorii $\mathbf{P, Q, R}$, scalarul \textbf{W} = $\mathbf{P
+\cdot (Q \times R)}$ se numește produsul mixt al acestor vectori. Dacă vectori
+sunt necoplanari, atunci modulul produsului mixt este egal cu volumul
+paralelipipedului ce se poate construi pe reprezentanții cu origine comună ai
+celor trei vectori.
+\todo{Figura de introdus aici}
+
+\newtheorem{mixed_product}[vector_arith]{Teorema}
+\begin{mixed_product}
+Următoarele proprietăți sunt adevărate pentru produsul mixt a trei vectori
+\textbf{P, Q, R}.
+\begin{enumerate}
+  \item $(P, Q \times R) = (R, Q \times P) = (Q, R \times P)$
+  \item $(P, Q \times R) = -(P, R \times Q)$
+  \item $(tP, Q \times R) = (P, tQ \times R) = (P, Q \times tR), \forall t \in
+  \mathbf{R}$
+  \item $(P_1 + P_2, Q \times R) = (P_1, Q \times R) + (P_2, Q \times R)$
+  \item $(P \times Q, R \times S) =
+  \begin{vmatrix}
+  (P, R) & (P, S) \\
+  (Q, R) & (Q, S)
+  \end{vmatrix} 
+  $ (identitatea Lagrange)
+  \item $(P, Q \times R) = 0$ dacă și numai dacă
+  \begin{itemize}
+    \item[(i)] cel puțin unul dintre vectorii \textbf{P, Q, R} este nul;
+    \item[(ii)] doi dintre vectori sunt coliniari;
+    \item[(iii)] vectorii \textbf{P, Q, R} sunt coplanari. 
+  \end{itemize}
+\end{enumerate}
+\end{mixed_product}
+
+Produsul mixt a trei vectori \textbf{P, Q, R} poate fi calculat mai ușor prin
+evaluarea determinantului 
+$
+\begin{vmatrix}
+P_x & P_y & P_z \\
+Q_x & Q_y & Q_z \\
+R_x & R_y & R_z
+\end{vmatrix}
+$.
+
+\subsection{Reprezentarea conceptului de vector in codul aplicației}
+\label{ch1:sec_vectors:sub_vector_cpp_impl}
+\indent
+
+Odată introdusă reprezentarea matematică a conceptului de vector, este momentul
+sa vedem cum este transpus acest concept în cod. Librăria \textbf{gfx\_lib}
+conține clase pentru vectori cu 2, 3 și 4 componente, corespunzînd vectorilor
+din $\mathbf{R^2, R^3, R^4}$. Clasele sunt clase template, fiind parametrizate
+în funcție de tipul componentelor (numere intregi/reale).
+Urmează cîteva fragmente de cod din implementarea clasei \textbf{vector3}, care
+abstractizează un vector cu 3 componente din $\mathbf{R^3}$ (clasele
+\textbf{vector2} si \textbf{vector4} sunt similare).
+
+\todo{Codul sursa pt listing mai trebuie rearanjat / scurtat}
+\lstinputlisting[
+    caption = Reprezentarea in cod a conceptului de vector,
+    label=lst:vec:vec4_class,
+    linerange={1-141}
+    ]{./capitolul1/source_code/vector3.h.src}
+
+Variabilele membre care reprezintă componentele vectorului sunt declarate în
+partea publică a clasei. Am ales această opțiune deoarece a implementa
+getteri/setteri ar fi complicat liziblitatea codului și ar fi insemnat 
+și duplicare de cod. Clasa are un constructor default, care lasă componentele
+neinițializate. Constructorul ar putea ințializa toate elementele la zero, dar
+asta ar însemna timp suplimentar, care poate deveni semnificativ atunci cînd 
+avem de-a face cu array-uri de dimensiuni mai mari. În plus, în majoritatea
+cazurilor, imediat după inițializare, obiectele vor primi alte valori. Pentru
+cazul în care se dorește inițializarea cu anumite valori specifice există mai mulți
+constructori. Clasa oferă operatori și funcții non-membre pentru toate
+operațiile cu vectori introduse în capitolele anterioare.
+

@@ -1,0 +1,6 @@
+*.tmp
+tmp
+output
+*.aux
+*.prefs
+*.swp

@@ -1,0 +1,33 @@
+% *************** LEd - MSc template document ***************
+
+\documentclass[11pt, a4paper, makeidx]{memoir}
+\usepackage[romanian]{babel}
+\selectlanguage{romanian}
+\usepackage[utf8x]{inputenc}
+\input{setup/style.tex}
+
+\begin{document}
+% *************** Front matter ***************
+\frontmatter
+\input{setup/front.tex}
+
+% *************** Main matter ***************
+\mainmatter
+\include{capitolul1/sisteme_grafice}
+\include{capitolul1/sisteme_de_coordonate}
+\include{capitolul1/vectori}
+
+% *************** Bibliography ***************
+\bibliographystyle{plain}
+{\small\bibliography{MSc}}
+
+% *************** Appendixes ***************
+%\appendix
+%\appendixpage*
+%\input{app1/app1.tex}
+
+% *************** Back matter ***************
+\backmatter
+\input{setup/back.tex}
+
+\end{document}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>lucrare_licenta</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>net.sourceforge.texlipse.builder.TexlipseBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>net.sourceforge.texlipse.builder.TexlipseNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>.tex</name>
+			<type>1</type>
+			<location>C:/opt/utils/miktex_29/tex/latex/tools/.tex</location>
+		</link>
+		<link>
+			<name>cap.tex</name>
+			<type>1</type>
+			<location>C:/opt/utils/miktex_29/tex/generic/c-pascal/cap.tex</location>
+		</link>
+		<link>
+			<name>s.tex</name>
+			<type>1</type>
+			<location>C:/opt/utils/miktex_29/tex/latex/tools/s.tex</location>
+		</link>
+	</linkedResources>
+</projectDescription>

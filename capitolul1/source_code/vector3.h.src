@@ -1,0 +1,180 @@
+template<typename real_t>
+class vector3 {
+public:
+    enum { 
+        is_floating_point = implementation_details::types_eq<real_t, float>::result 
+                            || implementation_details::types_eq<real_t, double>::result 
+                            || implementation_details::types_eq<real_t, long double>::result
+    };
+
+    typedef real_t          element_type;
+    typedef real_t&         reference;
+    typedef const real_t&   const_reference;
+    typedef vector3<real_t> vector3_t;
+
+    union {
+        struct {
+            real_t x_;
+            real_t y_;
+            real_t z_;
+        };
+        real_t elements_[3];	///< Allows array like access to the elements */
+    };
+
+    vector3() {}
+
+    vector3(real_t x, real_t y, real_t z) : x_(x), y_(y), z_(z) {}
+
+    inline vector3(const real_t* input, size_t count);
+
+    inline vector3<real_t>& operator+=(const vector3<real_t>& rhs);
+
+    inline vector3<real_t>& operator-=(const vector3<real_t>& rhs);
+
+    inline vector3<real_t>& operator*=(real_t k);
+
+    inline vector3<real_t>& operator/=(real_t k);
+
+    inline real_t sum_components_squared() const;
+
+    inline real_t magnitude() const;
+
+    inline vector3& normalize();
+};
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+operator+(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+operator-(
+    const gfx::vector3<real_t>& lhs, 
+    const vector3<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+operator-(
+    const gfx::vector3<real_t>& vec
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+operator*(
+    const gfx::vector3<real_t>& vec, 
+    real_t k
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+operator*(
+    real_t k, 
+    const gfx::vector3<real_t>& vec
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+operator/(
+    const gfx::vector3<real_t>& vec, 
+    real_t k
+    );
+
+template<typename real_t>
+inline
+real_t
+dot_product(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+cross_product(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+project_vector_on_vector(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+project_vector_on_unit_vector(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    );
+
+template<typename real_t>
+inline
+real_t
+triple_scalar_product(
+    const gfx::vector3<real_t>& v1, 
+    const gfx::vector3<real_t>& v2, 
+    const gfx::vector3<real_t>& v3
+);
+
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+triple_vector_product(
+    const gfx::vector3<real_t>& v1, 
+    const gfx::vector3<real_t>& v2, 
+    const gfx::vector3<real_t>& v3
+);
+
+template<typename real_t>
+inline
+real_t
+distance_squared(
+    const gfx::vector3<real_t>& point1, 
+    const gfx::vector3<real_t>& point2
+);
+
+/**
+ * \fn  template<typename real_t> inline float distance( const gfx::vector3<real_t>& point1,
+ * const gfx::vector3<real_t>& point2 );
+ *
+ * \brief   Returns the distance between two points in R3.
+ * \param   point1  The first point.
+ * \param   point2  The second point.
+ */
+template<typename real_t>
+inline
+real_t
+distance(
+    const gfx::vector3<real_t>& point1, 
+    const gfx::vector3<real_t>& point2
+    );
+
+/**
+ * \typedef vector3<float> vector3F
+ *
+ * \brief   Defines an alias representing a vector3 having simple precision 
+ * 			floating point components.
+ */
+typedef vector3<float>  vector3F;
+
+/**
+ * \typedef vector3<double> vector3D
+ *
+ * \brief   Defines an alias representing a vector3 having double precision
+ * 			floating point components.
+ */
+typedef vector3<double> vector3D;
