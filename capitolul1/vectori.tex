@@ -210,7 +210,7 @@ multe utilizări într-o aplicație 3D, una din ele fiind o metodă de a calcula
 normalul la suprafață intr-un anumit punct al ei, dîndu-se doi vectori distincți
 și tangenți.
 
-\newtheorem{crossproduct_def}[vector_arith]{Definiția}
+\newtheorem{crossproduct_def}[def_dotproduct]{Definiția}
 \begin{crossproduct_def}
 Se numește produs vectorial a doi vectori tridimensionali \textbf{P, Q} și se
 notează cu \textbf{P $\times$ Q}, vectorul dat de formula
@@ -374,3 +374,178 @@ cazul în care se dorește inițializarea cu anumite valori specifice există ma
 constructori. Clasa oferă operatori și funcții non-membre pentru toate
 operațiile cu vectori introduse în capitolele anterioare.
 
+\todo{Mutat înainte de vectori ??}
+\subsection{Spații vectoriale}
+\label{ch1:sec_vectors:sub_vector_spaces}
+Tra la la
+\subsubsection{Grupuri}
+\label{ch1:sec_vectors:sub_vector_spaces:sub_sub_groups}
+\indent
+
+Prin \textit{structură algebrică} înțelegem o mulțime pe care s-au definit un
+număr finit de legi de compoziție și de relații, împreună cu proprietățile lor.
+O lege de compiziție poate fi o operație unară, binară, \textit{n}-ară.
+Înainte de a defini spațiile vectoriale este util să prezentăm noțiunile de grup
+și câmp.
+
+\indent
+Fie \textit{G} o mulțime nevidă. O funcție definită pe $\mathit{G \times G}$ și
+cu valori în \textit{G} se numește \textit{operație binară pe G}. O operație
+binară pe \textit{G} se notează cu *, valoarea ei se notează cu $\mathit{g_1 *
+g_2}$ și se citește „$\mathit{g_1}$ compus cu $\mathit{g_2}$”.
+
+\newtheorem{def_group}[def_dotproduct]{Definiția}
+\begin{def_group}
+O mulțime G împreună cu o operație binară * pe G și care satisface condițiile :
+\begin{enumerate}[(a)]
+  \item $\forall g_1, g_2, g_3 \in G, \quad g_1 * (g_2 * g_3) = (g_1 * g_2) *
+  g_3$ (asociativitate),
+  \item $\exists e \in G, \quad \forall g \in G, \quad e * g = g * e = g$
+  (element neutru),
+  \item $\forall g \in G, \quad \exists g' \in G, \quad g * g' = g' * g = e$
+  (element simetric) \end{enumerate} se numește grup.
+\end{def_group}
+Un grup se notează prin (G, *) soar doar prin G, caz în care operația se deduce
+din context.
+Dacă $\forall g_1, g_2 \in G, \quad g_1 * g_2 = g_2 * g_1$ (comutativitate),
+atunci grupul G se numește \textit{grup comutativ sau abelian}.
+
+\newtheorem{def_isomorph}[def_dotproduct]{Definiția}
+\begin{def_isomorph}
+Fie $(G_1, *), \quad (G_2, \circ)$ două grupuri. O funcție $\phi : G_1
+\rightarrow G_2$ care verifică relația $\phi(g_1 * g_2) = \phi(g_1) \quad \circ \quad
+\phi(g_2), \quad \forall g_1, g_2 \in G_1$ se numește homomorfism. Un
+homomorfism bijectiv se numește izomorfism.
+\end{def_isomorph}
+
+\newtheorem{def_field}[def_dotproduct]{Definiția}
+\begin{def_field}
+O mulțime K, împreună cu două aplicații ale lui $K \times K \rightarrow K$,
+numite adunare, respectiv înmulțire și care verifică cerințele :
+\begin{enumerate}
+  \item adunarea determină pe K o structura de grup abelian
+  \item înmulțirea determină pe K - $\lbrace 0 \rbrace$ o structură de grup
+  \item înmulțirea este distributivă față de adunare
+\end{enumerate} se numește corp. Un corp pentru care operația de înmulțire
+verifică și condiția de comutativitate se numește câmp.
+\end{def_field}
+
+\subsubsection{Spații vectoriale}
+\label{ch1:sec_vectors:sub_vector_spaces:sub_sub_vectorspaces}
+Structura de spațiu vectorial constă dintr-un grup aditiv comutativ \textbf{V},
+un câmp \textbf{K} și o înmulțire definită pe $\mathbf{K \times V} \rightarrow
+\mathbf{V}$, care verifică patru axiome.
+\newtheorem{def_vectorspaces}[def_dotproduct]{Definiția}
+\begin{def_vectorspaces}
+Mulțimea \textbf{V} se numește spațiu vectorial peste câmpul \textbf{K} daca
+admite
+\begin{enumerate}
+  \item o structură de grup comutativ, notată aditiv, $(v, w) \rightarrow v
+  + w$
+  \item o funție $f : \mathbf{K \times V} \rightarrow V, \quad f(k, v) = kv$,
+  astfel încât $\forall k, l \in \mathbf{K}, \quad \forall v, w \in \mathbf{V}$
+  să avem : \begin{center}
+  $1v = v$ \\ $k(lv) = (kl)v$ \\ $(k + l)v = kv + lv$ \\ $k(v + w) = kv + kw$
+  \end{center}  
+\end{enumerate}
+\end{def_vectorspaces}
+Elementele lui \textbf{V} se numesc vectori, elementele lui \textbf{K}
+se numesc scalari, iar aplicația \textit{f} înmulțirea vectorilor cu scalari.
+
+Fie \textbf{V} un spațiu vectorial pe câmpul \textbf{K} și \textbf{S} o
+submulțime a sa.
+\newtheorem{th_liniar_independent}[def_dotproduct]{Definiția}
+\begin{th_liniar_independent}
+Mulțimea \textbf{S} se numește liniar independentă dacă pentru orice alegere a n
+elemente din \textbf{S}, respectiv \textbf{K}, relația $\sum_{i = 1}^{n}s_ik_i$
+implică faptul că scalarii $k_1 = k_2 = \dots = k_n = 0$. În caz contrar se
+spune că multimea \textbf{S} este liniar dependentă.
+\end{th_liniar_independent}
+
+\newtheorem{th_liniar_comb}[def_dotproduct]{Definiția}
+\begin{th_liniar_comb}
+Spunem că un vector $x \in \mathbf{V}$ este o combinație liniară de vectorii
+$v_1, v_2, \dots v_n$ dacă există scalarii $k_1, k_2, \dots, k_n \in \mathbf{K}$
+astfel încât $x = \sum_{i = 1}^{n} k_iv_i$.
+\end{th_liniar_comb}
+
+\newtheorem{th_generator}[def_dotproduct]{Definiția}
+\begin{th_generator}
+Spunem că vectorii $v_1, v_2, \dots, v_n$ formează un sistem de generatori
+pentru spațiul vectorial \textbf{V} dacă $\forall x \in \mathbf{V}, \quad
+\exists k_1, k_2, \dots, k_n \in \mathbf{K}$ astfel încât $x = \sum_{i
+= 1}^{n}v_ik_i$.
+\end{th_generator}
+
+\newtheorem{th_vector_basis}[def_dotproduct]{Definiția}
+\begin{th_vector_basis}
+Fie \textbf{V} un spațiu vectorial peste un câmp \textbf{K}. Un sistem $B = (
+e_1, e_2, \dots, e_n )$ de vectori din \textbf{V}, $1 \leq i \leq n$, se 
+numește bază a lui \textbf{V}, dacă :
+\begin{enumerate}
+  \item orice vector din \textbf{V} se poate scrie ca o combinație liniară de
+  vectorii bazei \textbf{B} (\textbf{B} este un sistem de generatori pentru
+  spațiul vectorial \textbf{V}).
+  \item \textbf{B} este un sistem de vectori liniar independent.
+\end{enumerate}
+\end{th_vector_basis}
+
+Dacă pentru orice pereche de elemente ale unei baze, de forma $(e_i, e_j), i
+\neq j$, se verifică relația $e_i \cdot e_j = 0$, atunci baza se numește
+ortogonală.
+
+Fie simbolul $\delta$ al lui Kronecker, definit ca 
+\begin{equation}
+\delta_{ij} =
+\begin{cases}
+1, & \text{dacă } i = j, \\
+0, & \text{dacă } i \neq j 
+\end{cases}
+\end{equation}
+Atunci, daca pentru orice pereche de elemente ale unei baze, de forma $(e_i,
+e_j)$, este adevarată relația $e_i \cdot e_j = \delta_{ij}$, baza se numește
+ortonormală.
+
+\subsubsection{Ortogonalizare Gram-Schmidt}
+\label{ch1:sec_vectors:sub_vector_spaces:sub_sub_gram_schmidt}
+Procedeul de ortogonalizare Gram-Schmidt este un algoritm care primește ca și
+input un set de vectori liniar independenți și produce ca și rezultat un set de
+vectori ortogonali.
+
+\begin{algorithm}
+\caption{Ortogonalizare Gram-Schmidth}
+\label{alg:gram_schmidt}
+\begin{algorithmic}
+\STATE Input : un set de vectori liniar independenți $v_1, v_2, \dots v_n$.
+\STATE Output : un set de vectori ortonogonali $v'_1, v'_2, \dots v'_n$.
+\FOR{$i=1$ \TO $n$}
+\STATE $v'_i \leftarrow v_i$
+\FOR{$j=1$ \TO $i$}
+\STATE $v'_i \leftarrow v'_i - \frac{(v'_j, v_i)}{\Vert v'_j \Vert ^ 2}v'_j$
+\ENDFOR 
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+Algoritmul \ref{alg:gram_schmidt} este instabil numeric. Este posibil ca
+vectorii rezultați să nu mai fie ortogonali, din cauza erorilor de rotunjire. 
+Procesul Gram-Schmidt poate fi stabilizat printr-o mică modificare, această
+versiune fiind cunoscută sub denumirea de \textbf{ortogonalizare Gram-Schmidt
+modificată}. Timpul de execuție al algoritmului este \textbf{O(2mn)}, unde n
+reprezintă numărul de vectori din setul de input, iar m dimensionalitatea vectorilor
+\cite{GolubVanLoan96}.
+
+\begin{algorithm}
+\caption{Ortogonalizare Gram-Schmidt modificată}
+\label{alg:modified_gram_schmidt}
+\begin{algorithmic}
+\STATE Input : un set de vectori liniar independenți $v_1, v_2, \dots v_n$.
+\STATE Output : un set de vectori ortonormali $v'_1, v'_2, \dots v'_n$.
+\FOR{$i=1$ \TO $n$}
+\STATE $v'_i \leftarrow v_i$
+\FOR{$j=1$ \TO $i$}
+\STATE $v'_i \leftarrow v'_i - \frac{(v'_j, v_i)}{\Vert v'_j \Vert ^ 2}v'_j$
+\ENDFOR 
+\STATE $v'_i = v'_i / \Vert v'_i \Vert$ \COMMENT{normalizează vectorul rezultat}
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
