@@ -46,10 +46,158 @@ Proprietățile adunării matricilor.
   c_{ij}}$.
   \item Adunarea matricilor admite element neutru, matricea \textbf{O}
   (matricea nulă), cu m linii și n coloane, adică $\mathbf{A + O = O + A = A}$.
-  \item Orice matrice are un opus, adica $\forall A = \Vert a_{ij} \Vert \quad
+  \item Orice matrice are un opus, adică $\forall A = \Vert a_{ij} \Vert \quad
    \exists \quad (-A) = \Vert (-a_{ij}) \Vert \quad \text{a.î} \quad 
    A + (-A) = (-A) + A = O$.
 \end{enumerate}
 Aceste proprietăți arată că mulțimea matricilor de $m \times n$ linii și
 coloane cu elemente din $\mathbf{R, C}$ formează un grup abelian față de
 operația de adunare.
+
+Înmulțirea a două matrici dreptunghiulare $A \times B$, unde
+\begin{center}
+$A = \Vert a_{ij} \Vert, \quad i = 1, 2, \dots n, \quad j = 1, 2, \dots m$, \\
+$B = \Vert b_{hk} \Vert, \quad h = 1, 2, \dots p, \quad k = 1, 2, \dots q$
+\end{center}
+nu este definită decât dacă $p = n$, adică numărul coloanelor matricii A este
+egal cu numărul liniilor matricii B. Dacă această condiție este îndeplinită, produsul
+$A \times B$ este o matrice $A \times B = \Vert c_{ij} \Vert$, unde $c_{ij} =
+\sum_{h = 1}^{n}a_{ih}b_{hk}$, deci $A \times B$ este o matrice de $m \times q$.
+
+Înmulțirea unei matrici cu un scalar $\lambda$ rezultă intr-o matrice $\lambda A
+= \Vert \lambda a_{ij} \Vert$.
+
+O matrice pentru care numărul de linii este egal cu numărul de coloane se
+numește matrice pătratică.
+
+Oricare ar fi trei matrici pătratice de ordinul n, $A, B, C \in \mathrm{R}_{n}$
+sunt adevărate următoarele afirmații :
+\begin{enumerate}
+  \item Adunarea este comutativă, adică : $A + B = B + A$
+  \item Adunarea este asociativă, adică : $A + (B + C) = (A + B) + C$
+  \item Matricea \textbf{O} de ordinul n, având toate elementele egale cu zero,
+  este element neutru pentru adunare, adică $A + O = O + A = A$
+  \item Pentru orice matrice \textbf{A} din $\mathrm{R}_n$ există opusul
+  $\mathbf{-A} = \Vert -a_{ij} \Vert$, astfel încât $A + (-A) = (-A) + A = O$.
+  \item Înmulțirea matricilor este asociativă, adica $A \times (B \times C) =
+  (A \times B) \times C$
+  \item Elementul neutru în $\mathfrak{R}^n$ este matricea unitate de ordinul
+  \textit{n}, notată cu $\mathbf{I}_{n}$
+  \[
+  \mathbf{I}_{n} = \Vert \delta_{ij} \Vert,
+  \begin{cases}
+  0, \quad i \neq j \\
+  1, \quad i = j
+  \end{cases} \quad \text{sau} \quad
+  \mathbf{I}_{n} = 
+  \begin{vmatrix}
+  1 & 0 & 0 & \dots & 0 \\
+  0 & 1 & 0 & \dots & 0 \\
+  0 & 0 & 1 & \dots & 0 \\
+  \hdotsfor{5} \\
+  0 & 0 & 0 & \dots & 1
+  \end{vmatrix}
+  \] și pentru care avem $A \times I_{n} = I_{n} \times A = A$.
+  \item Înmulțirea matricilor este distributivă față de operația de adunare,
+  adică $A \times (B + C) = A \times B + A \times C$.
+\end{enumerate}
+
+\todo{Inserat transpusa matricii aici, proprietătile determinantilor fac
+referire la tanspusa}
+
+\newtheorem{th_transpose}[th_matrixdef]{Definiția}
+\begin{th_transpose}
+Fie $A = \Vert a_{ij} \Vert$ o matrice de \textit{m} linii și
+\textit{n} coloane. Se numește transpusa matricii A și se noteaza cu $A^T$,
+matricea de \textit{n} linii și \textit{m} coloane și care verifică relația
+$a_{ij} = a^T_{ji}, \forall i = 1 \to m, j = 1 \to n$.
+\end{th_transpose}
+Pentru transpusa unei matrici sunt valabile următoarele proprietăți :
+\begin{enumerate}
+  \item $(A^T)^T = A$ (transpusa transpusei este matricea inițială).
+  \item $(A + B)^T = A^T + B^T$.
+  \item $(A \times B) ^ T = B ^ T \times A ^ T$.
+\end{enumerate}
+
+O matrice se numește simetrică dacă elementele sale verifică relația $a_{ij} =
+a_{ji}$. Transpusa unei matrici simetrice este egală cu matricea inițială.
+Exemplu : matricea
+\begin{equation*}
+A = 
+\begin{bmatrix}
+1 & 9 & 4 \\
+9 & 5 & 3 \\
+4 & 3 & 7  
+\end{bmatrix}
+\end{equation*} este o matrice simetrică, deoarece elementele ei verifică
+cerința ca $a_{ij} = a_{ji}$.
+\indent
+ 
+O matrice ale cărei elemente verifică relația $a_{ij} = -(a_{ji})$ se numește
+matrice antisimetrică. O matrice antisimetrică are toate elementele de pe 
+diagonala principală egale cu zero (din condiția $a_{ij} = -(a_{ji})$).
+Transpusa unei matrici antisimetrice este egală cu opusul matricii inițiale,
+adică $A^T = -(A)$.
+Exemplu : matricea
+\begin{equation*}
+A = 
+\begin{bmatrix}
+0 & 9 & -4 \\
+-9 & 0 & -5 \\
+4 & 5 & 0
+\end{bmatrix}
+\end{equation*} este o matrice antisimetrică, iar transpusa ei este :
+\begin{equation*}
+A^T =
+\begin{bmatrix}
+0 & -9 & 4 \\
+9 & 0 & 5 \\
+-4 & -5 & 0
+\end{bmatrix}.
+\end{equation*}
+
+\newtheorem{th_det}[th_matrixdef]{Definiția}
+\begin{th_det}
+Fie A o matrice pătratică din $\mathfrak{R}_{n}$. Se numește determinantul
+matricii A și se notează cu 
+\[
+detA = 
+\begin{vmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\hdotsfor{4} \\
+a_{n1} & a_{n2} & \dots & a_{nn}
+\end{vmatrix}, \quad \text{scalarul dat de formula}  
+\sum_{\substack{\sigma \in S_{n}}} \epsilon (\sigma) a_{1\sigma(1)}
+a_{2\sigma(2)} \cdots a_{n\sigma(n)}
+\], unde $S_{n}$ este mulțimea tuturor permutărilor de gradul $\mathit{n}$ și
+$\epsilon(\sigma)$ este signatura permutării $\sigma$.
+\end{th_det}
+Pentru o excelentă introducere în permutări, lucrările \cite{NitaNS96} sau
+\cite{Rosculet87} sunt recomandate.
+
+Pentru a ușura calculul determinanților, ne putem folosi de o serie de
+proprietăți ale acestora :
+\begin{enumerate}
+  \item Determinantul unei matrice coincide cu determinantul transpusei matricii
+  respective, adică $det(A) = det(A^{T}), \forall A \in \mathfrak{R}_{n}$.
+  \item Dacă într-o matrice toate elementele unei linii sau coloane sunt egale
+  cu zero, atunci determinantul matricii este nul.
+  \item Dacă într-o matrice schimbăm între ele două linii sau două coloane,
+  obținem o matrice al cărei determinant este egal cu opusul determinantului
+  matricii inițiale.
+  \item Dacă o matrice are două linii sau două coloane identice, atunci
+  determinantul său este nul.
+  \item Dacă toate elementele unei linii (sau coloane) ale unei matrici sunt
+  înmulțite cu un număr $\alpha$, obținem o matrice al cărei determinant este
+  egal cu $\alpha$ înmulțit cu determinantul matricei inițiale.
+  \item Dacă într-o matrice elementele a două linii sau două coloane sunt
+  proporționale, atunci determinantul matricii este nul.
+  \item Dacă o linie sau o coloană este o combinație liniară de celelalte linii
+  sau coloane, atunci determinantul matricii este nul.
+  \item Dacă la o linie sau coloana a unei matrice adunăm elementele altei linii
+  sau coloane, înmulțite cu același număr, obținem o matrice al cărei
+  determinant este egal cu determinantul matricei inițiale.
+  \item $det(A \times B) = det(A) \times \det(B), \forall A, B \in
+  \mathfrak{R}_{n}$.
+\end{enumerate}
