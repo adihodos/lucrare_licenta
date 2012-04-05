@@ -1,0 +1,55 @@
+\section{Matrici}
+\label{ch1:sec_matrix}
+
+Într-un engine grafic, calculele pot fi realizate într-o multitudine de spații
+de coordonate Carteziene diferite. Trecerea de la un spațiu de coordonate la
+altul presupune utilizarea matricilor de transformare. Așadar, matricile sunt un
+concept fundamental pentru orice aplicație grafică, iar scopul acestui capitol
+este de a explora proprietățile lor.
+
+\subsection{Proprietățile matricilor}
+\label{ch1:sec_matrix:sub_matrix_properties}
+
+\newtheorem{th_matrixdef}{Definiția}
+\begin{th_matrixdef}
+Fie $a_{ij}, i = 1, 2, \dots m, j = 1, 2, \dots n, m \times n$ numere. Se
+numește matrice $m \times n$ tabloul dreptunghiular
+$
+A =
+\begin{Vmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\dots \\
+a_{n1} & a_{n2} & \dots & a_{mn}
+\end{Vmatrix} = \Vert a_{ij} \Vert
+$ cu m linii și n coloane. Numerele $a_{ij}$ se numesc elementele matricii.
+\end{th_matrixdef}
+
+Două matrice $m \times n \mathbf{A} = \Vert a_{ij} \Vert, \quad 
+\mathbf{B} = \Vert b_{ij} \Vert$ sunt egale dacă $a_{ij} = b_{ij}, \quad 
+\forall i,j \in {1, 2, \dots n}$. Operația de egalitate a matricilor este
+definită numai dacă cele două matrici au același număr de linii și coloane.
+
+\newtheorem{th_matrixadd}[th_matrixdef]{Definiția}
+\begin{th_matrixadd}
+Suma a două matrice $m \times n$, $\mathbf{A} = \Vert a_{ij} \Vert, \quad
+\mathbf{B} = \Vert b_{ij} \Vert$ este matricea $A + B = \Vert a_{ij} + b_{ij}
+\Vert$.
+\end{th_matrixadd}
+
+Proprietățile adunării matricilor.
+\begin{enumerate}
+  \item Adunarea este comutativă : $\mathbf{A + B = B + A}$, deoarece
+  $\mathit{a_{ij} + b_{ij} = b_{ij} + a_{ij}}$.
+  \item Adunarea matricilor este asociativă : $\mathbf{A + (B + C) = (A + B) +
+  C}$, deoarece $\mathit{a_{ij} + (b_{ij} + c_{ij}) = (a_{ij} + b_{ij}) +
+  c_{ij}}$.
+  \item Adunarea matricilor admite element neutru, matricea \textbf{O}
+  (matricea nulă), cu m linii și n coloane, adică $\mathbf{A + O = O + A = A}$.
+  \item Orice matrice are un opus, adica $\forall A = \Vert a_{ij} \Vert \quad
+   \exists \quad (-A) = \Vert (-a_{ij}) \Vert \quad \text{a.î} \quad 
+   A + (-A) = (-A) + A = O$.
+\end{enumerate}
+Aceste proprietăți arată că mulțimea matricilor de $m \times n$ linii și
+coloane cu elemente din $\mathbf{R, C}$ formează un grup abelian față de
+operația de adunare.
