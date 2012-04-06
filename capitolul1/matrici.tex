@@ -102,9 +102,6 @@ sunt adevărate următoarele afirmații :
   adică $A \times (B + C) = A \times B + A \times C$.
 \end{enumerate}
 
-\todo{Inserat transpusa matricii aici, proprietătile determinantilor fac
-referire la tanspusa}
-
 \newtheorem{th_transpose}[th_matrixdef]{Definiția}
 \begin{th_transpose}
 Fie $A = \Vert a_{ij} \Vert$ o matrice de \textit{m} linii și
@@ -156,6 +153,9 @@ A^T =
 \end{bmatrix}.
 \end{equation*}
 
+\subsection{Determinanți}
+\label{ch1:sec_matrix:sub_determinants}
+
 \newtheorem{th_det}[th_matrixdef]{Definiția}
 \begin{th_det}
 Fie A o matrice pătratică din $\mathfrak{R}_{n}$. Se numește determinantul
@@ -201,3 +201,47 @@ proprietăți ale acestora :
   \item $det(A \times B) = det(A) \times \det(B), \forall A, B \in
   \mathfrak{R}_{n}$.
 \end{enumerate}
+
+Fie
+\begin{equation*}
+d = 
+\begin{vmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\hdotsfor{4} \\
+a_{n1} & a_{n2} & \dots & a_{nn}
+\end{vmatrix}
+\end{equation*} un determinant de ordinul \textit{n}. Determinantul de ordin
+\textit{n - 1} care se obține suprimând linia \textit{i} și coloana \textit{j}
+din determinantul \textit{d} se numește minorul elementului $\mathit{a_{ij}}$ și
+se notează cu $\mathit{d_{ij}}$. Numărul 
+\[
+\delta_{ij} = (-1)^{i + j}d_{ij} 
+\] se numește \textit{complement algebric (cofactor)} al elementului
+$\mathit{a_{ij}}$.
+
+\newtheorem{th_detcompute}{Teorema}
+\begin{th_detcompute}
+Fie determinantul de ordinul \textit{n}, $\mathit{d} = \vert a_{ij} 
+\vert_{1 \leq i \leq n, 1 \leq j \leq n}$. Atunci pentru orice 
+$1 \leq i \leq n$ are loc egalitatea :
+\begin{equation}
+\label{mat:det_compute1}
+\mathit{d} = a_{i1}\delta_{i1} + a_{i2}\delta_{i2} + \cdots + a_{in}\delta_{in}.
+\end{equation}
+\end{th_detcompute}
+Egalitatea \eqref{mat:det_compute1} poartă denumirea de \textit{dezvoltarea
+determinantului d după linia i}.
+
+\newtheorem{th_detcompute2}[th_detcompute]{Teorema}
+\begin{th_detcompute2}
+Fie determinantul de ordinul \textit{n}, $\mathit{d} = \vert a_{ij} 
+\vert_{1 \leq i \leq n, 1 \leq j \leq n}$. Atunci pentru orice 
+$1 \leq j \leq n$ are loc egalitatea :
+\begin{equation}
+\label{mat:det_compute2}
+\mathit{d} = a_{1j}\delta_{1j} + a_{2j}\delta_{2j} + \cdots + a_{nj}\delta_{nj}.
+\end{equation}
+\end{th_detcompute2}
+Egalitatea \eqref{mat:det_compute2} poartă denumirea de \textit{dezvoltarea
+determinantului d după coloana j}.
