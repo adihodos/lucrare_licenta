@@ -90,13 +90,13 @@ sunt adevărate următoarele afirmații :
   1, \quad i = j
   \end{cases} \quad \text{sau} \quad
   \mathbf{I}_{n} = 
-  \begin{vmatrix}
+  \begin{bmatrix}
   1 & 0 & 0 & \dots & 0 \\
   0 & 1 & 0 & \dots & 0 \\
   0 & 0 & 1 & \dots & 0 \\
   \hdotsfor{5} \\
   0 & 0 & 0 & \dots & 1
-  \end{vmatrix}
+  \end{bmatrix}
   \] și pentru care avem $A \times I_{n} = I_{n} \times A = A$.
   \item Înmulțirea matricilor este distributivă față de operația de adunare,
   adică $A \times (B + C) = A \times B + A \times C$.
@@ -245,3 +245,118 @@ $1 \leq j \leq n$ are loc egalitatea :
 \end{th_detcompute2}
 Egalitatea \eqref{mat:det_compute2} poartă denumirea de \textit{dezvoltarea
 determinantului d după coloana j}.
+
+\subsection{Matrici inversabile.}
+\label{ch1:sec_matrix:sub_matrix_inverse}
+
+O matrice pătratică \textbf{A}, de ordinul \textit{n}, se spune că este
+\textit{inversabilă} dacă există o matrice pătratică \textbf{B}, de ordinul
+\textit{n}, astfel încât : $\mathbf{AB = BA = I_{n}}$. Inversa unei matrici
+pătratice (dacă există), este unică.
+O matrice pătratică se numește \textit{singulară (sau degenerată)} dacă
+determinantul său este nul. În caz contrar, se numește \textit{nesingulară}.
+
+\newtheorem{th_matrixinverse}[th_detcompute]{Teoremă}
+\label{theorem:matrix_inverse}
+\begin{th_matrixinverse}
+Fie \textbf{A} o matrice pătratică de ordinul \textit{n} din $\mathfrak{R}_{n}$.
+Atunci matricea \textbf{A} este inversabilă dacă și numai dacă det(A) este nenul
+(matricea A este nesingulară).
+\end{th_matrixinverse}
+
+Pentru a găsi inversa unei matrici, procedăm în felul următor.
+Fie
+\[
+A = 
+\begin{bmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\hdotsfor{4} \\
+a_{n1} & a_{n2} & \dots & a_{nn}
+\end{bmatrix}
+\] o matrice pătratică de ordinul n. Construim \textit{matricea adjunctă}
+$\mathbf{A^\star}$ a matricii \textbf{A},
+\begin{equation*}
+\mathbf{A^\star} = 
+\begin{bmatrix}
+A_{11} & A_{12} & \dots & A_{1n} \\
+A_{21} & A_{22} & \dots & A_{2n} \\
+\hdotsfor{4} \\
+A_{n1} & A_{n2} & \dots & A_{nn}
+\end{bmatrix},
+\end{equation*} al cărei element $\mathit{A_{ij}}$ de pe linia \textit{i} și
+coloana \textit{j} este complementul algebric al elementului $\mathit{a_{ij}}$
+din matricea \textbf{A}.
+Atunci, inversa matricii \textbf{A} se poate calcula după formula :
+\begin{equation}
+\label{mat:matrix_inverse}
+\mathbf{A^{-1}} = \frac{1}{det(A)} \cdot A^{*},
+\end{equation} adică împărțind matricea adjunctă matricii \textbf{A} la
+valoarea determinantului matricii \textbf{A}.
+
+Un alt procedeu prin care putem găsi inversa unei matrici este algoritmul
+Gauss-Jordan. Acest procedeu se folosește de faptul ca asupra unei linii a unei
+matrici pot fi aplicate următoarele \textit{operații elementare} :
+\begin{enumerate}[(a)]
+  \item interschimbarea a două linii
+  \item înmulțirea unei linii cu un scalar non-zero
+  \item înmulțirea unei linii cu un scalar și adunarea ei la altă linie
+  \end{enumerate}
+Pentru a găsi inversa unei matrici pătratice \textbf{A}, de ordinul \textit{n},
+începem prin a construi o matrice adițională $n \times 2n$, prin concatenarea 
+matricii identice $\mathbf{I_{n}}$ la dreapta matricii inițiale :
+\begin{equation}
+\label{eq:augm_matrix}
+\tilde{A} = 
+\begin{bmatrix}
+a_{11} & a_{12} & \dots & \vert & 1 & 0 & \dots & 0 \\
+a_{21} & a_{22} & \dots & \vert & 0 & 1 & \dots & 0 \\
+\hdotsfor{8} \\
+a_{n1} & a_{n2} & \dots & \vert & 0 & 0 & \dots & 1
+\end{bmatrix}
+\end{equation}
+Apoi, prin \textit{operații elementare} asupa matricii $\tilde{A}$, se încearcă
+aducerea matricii din partea stângă la matricea unitate $\mathbf{I_{n}}$,
+procedeul având ca rezultat obținerea în partea dreaptă a matricii inverse
+matricii \textbf{A}.
+
+\begin{algorithm}
+\caption{Eliminare Gauss-Jordan}
+\label{alg:gauss_jordan_elim}
+\begin{algorithmic}
+\STATE Input : o matrice pătratică A de ordin n.
+\STATE Output : inversa matricii A, dacă există.
+\begin{enumerate}[{Pas} 1.]
+  \item Se construiește matricea $\tilde{A}$ din ecuația \eqref{eq:augm_matrix}.
+  \item Se parcurg toate coloanele de la 1 la n.
+  \item Se identifică rândul \textit{i}, cu $\mathit{i \geq j}$ astfel încât
+  $\tilde{A}_{ij}$ să aibe valoarea absolută cea mai mare. Dacă un astfel de
+  rând nu există, matricea nu are inversă și algoritmul se oprește.
+  \item Daca $\mathit{i \neq j}$, atunci se interschimbă rândurile 
+  \textit{i, j}. Aceasta este operația de pivotare necesară pentru a îndepărta
+  zerourile de pe diagonala principală și pentru a asigura stabilitate numerică.
+  \item Multiplică rândul \textit{j} cu $1 \text{/} \tilde{A}_{jj}$. Această
+  operație face ca elementul \textit{(j, j)} să devină egal cu 1.
+  \item Pentru fiecare rând \textit{r}, cu $\mathit{1 \leq r \leq n}$ și $r
+  \neq j$, adună rândul \textit{j} înmulțit cu $-\tilde{A}_{rj}$ la rândul
+  \textit{r}. Această operație face ca toate elementele de pe coloana
+  corespunzătoare elementului \textit{(j, j)} să devină egale cu zero.
+  \item Dacă $\mathit{j < n}$ incrementează \textit{j} și se revine la pasul 2.
+\end{enumerate}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Implementarea în codul aplicației a conceptului de matrice.}
+\label{ch1:sec_matrix:sub_matrix_appcode}
+\indent
+
+Librăria \textbf{gfx\_lib} conține clase pentru matrici pătratice de ordinul 2,
+3 și 4, precum și pentru matrici de dimensiuni arbitrare. Clasele sunt
+similare ca și concept si funcționalitate, cu unele diferențe. Clasele sunt clase template,
+fiind parametrizate cu tipul elementelor stocate, permițând astfel matrici cu
+elemente numere intregi sau matrici cu elemente numere reale stocate prin
+reprezentare în virgulă mobilă cu simplă/dublă precizie. De asemenea, ele oferă
+suport pentru operațiile cu matrici prezentate anterior (transpunerea unei
+matrici, calcularea determinantului, a inversei (dacă există), adunare,
+scădere, inmulțire cu scalari/matrici, etc).
+\todo{Inserat cod sursa pentru matrici aici}
