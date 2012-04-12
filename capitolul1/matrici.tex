@@ -246,6 +246,110 @@ $1 \leq j \leq n$ are loc egalitatea :
 Egalitatea \eqref{mat:det_compute2} poartă denumirea de \textit{dezvoltarea
 determinantului d după coloana j}.
 
+Codul pentru calcularea determinantului unei matrici se folosește însă de alt
+procedeu și anume regula lui \textbf{Laplace}.
+\newtheorem{th_laplace_rule}{Teorema lui Laplace}
+\begin{th_laplace_rule}
+Un determinant este egal cu suma tuturor produselor dintre determinanții minori
+formați cu elementele a \textit{p} linii sau coloane date cu complementele lor
+algebrice.
+\end{th_laplace_rule}
+Exemplu :
+\begin{equation*}
+\text{Fie } D = 
+\begin{vmatrix}
+1 & 1 & 2 & 3 \\
+1 & 1 & 3 & 4 \\
+2 & 5 & 1 & -1 \\
+-1 & -2 & 2 & 4
+\end{vmatrix}.
+\end{equation*}
+Dezvoltând după primele două linii, obținem :
+\begin{align*}
+D =
+\begin{vmatrix}
+1 & 1 \\
+1 & 1
+\end{vmatrix} \cdot
+\begin{vmatrix}
+1 & -1 \\
+2 & 4
+\end{vmatrix} -
+\begin{vmatrix}
+1 & 2 \\
+1 & 3
+\end{vmatrix} \cdot
+\begin{vmatrix}
+5 & -1 \\
+-2 & 4
+\end{vmatrix} +
+\begin{vmatrix}
+1 & 3 \\
+1 & 4
+\end{vmatrix} \cdot
+\begin{vmatrix}
+5 & 1 \\
+-2 & 2
+\end{vmatrix} + \\ +
+\begin{vmatrix}
+1 & 2 \\
+1 & 3
+\end{vmatrix} \cdot
+\begin{vmatrix}
+2 & -1 \\
+-1 & 4
+\end{vmatrix} -
+\begin{vmatrix}
+1 & 3 \\
+1 & 4
+\end{vmatrix} \cdot
+\begin{vmatrix}
+2 & 1 \\
+-1 & 2
+\end{vmatrix} +
+\begin{vmatrix}
+2 & 3 \\
+3 & 4
+\end{vmatrix} \cdot
+\begin{vmatrix}
+2 & 5 \\
+-1 & -2
+\end{vmatrix} = \\
+= 0 \cdot 6 - 1 \cdot 18 + 1 \cdot 12 + 1 \cdot 7 - 1 \cdot 5 - 1 \cdot 1
+= -5.
+\end{align*}
+
+\noindent
+Iată și codul funcției membre pentru calcularea determinantului.
+\begin{lstlisting}[]
+template<typename real_t>
+real_t
+gfx::matrix_4X4<real_t>::determinant() const {
+    const real_t k1 = a11_ * a22_ - a12_ * a21_;
+    const real_t l1 = a33_ * a44_ - a34_ * a43_;
+
+    const real_t k2 = a11_ * a23_ - a13_ * a21_;
+    const real_t l2 = a32_ * a44_ - a34_ * a42_;
+
+    const real_t k3 = a11_ * a24_ - a14_ * a21_;
+    const real_t l3 = a32_ * a43_ - a33_ * a42_;
+
+    const real_t k4 = a12_ * a23_ - a13_ * a22_;
+    const real_t l4 = a31_ * a44_ - a43_ * a41_;
+
+    const real_t k5 = a12_ * a24_ - a14_ * a22_;
+    const real_t l5 = a31_ * a43_ - a33_ * a41_;
+
+    const real_t k6 = a13_ * a24_ - a14_ * a23_;
+    const real_t l6 = a31_ * a42_ - a32_ * a41_;
+
+    return k1 * l1 - k2 * l2 + k3 * l3 
+           + k4 * l4 - k5 * l5 
+           + k6 * l6;
+}
+
+\end{lstlisting}
+
 \subsection{Matrici inversabile.}
 \label{ch1:sec_matrix:sub_matrix_inverse}
 
