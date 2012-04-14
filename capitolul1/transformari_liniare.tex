@@ -1,0 +1,155 @@
+\section{Transformări}
+\label{ch1:sec_transforms}
+
+\subsection{Spațiu liniar}
+\label{ch1:sec_transforms:sub_linear_space}
+Înainte de a prezenta transformările este necesară introducerea unor concepte și
+termeni ajutatori. Unul din ele este conceptul de \textit{spațiu liniar}.
+Vom considera o mulțime de elemente $Q = \lbrace a, b, c, \dots \rbrace$ și un
+corp $\mathbf{K}$, pe care îl luăm $\mathbf{R}$ sau $\mathbf{C}$.
+\newtheorem{theorem_liniar_space}{Definiție}
+\begin{theorem_liniar_space}
+Mulțimea $\mathbf{Q}$ formează un spațiu liniar $\mathbf{L}$ dacă între
+elementele sale sunt definite două operații : adunare $(+)$ și înmuțire cu
+scalari $(\cdot)$, cu următoarele proprietăți :
+\begin{easylist}
+\ListProperties(Numbers1=R,Numbers2=a,Margin2=3ex)
+@ Mulțimea $\mathbf{Q}$ împreună cu operația de adunare formează un grup
+abelian, adică
+@@ $a + b = c, \quad \forall a, b, c \in L$
+@@ $a + b = b + a, \quad \forall a,b \in L$
+@@ $a + (b + c) = (a + b) + c, \quad \forall a, b, c \in L$
+@@ există elementul neutru, $0 \in L$ astfel încât $a + 0 = 0 + a = a$
+@@ la orice $a \in L$, există opusul său  $(-a) \in L$, a.î. $a + (-a) = (-a) +
+a = 0$
+@ Dacă $(\lambda, \mu, \dots) \in \mathbf{K}$, este definită operația
+$(\cdot)$ de înmulțire cu scalari (elemente ale lui $\mathbf{K}$), și care verifică
+axiomele :
+@@ $\lambda a \in L$
+@@ $\lambda(\mu a) = (\lambda \mu)a$ (asociativitate)
+@@ $(\lambda + \mu)a = \lambda a + \mu a$ (distributivitate)
+@@ $\lambda(a + b) = \lambda a + \lambda b$ (distributivitate față de operația
+$+$ în $\mathbf{L}$)
+@@ există elementul neutru $1 \in \mathbf{K}$ astfel încât $1 \cdot a = a \cdot
+1 = a, \quad \forall a \in \mathbf{K}$
+\end{easylist}
+\end{theorem_liniar_space}
+Elementele unui spațiu liniar se numesc vectori. Daca $\mathbf{K} = \mathbf{R}$
+spațiul liniar se numește real; dacă $\mathbf{K} = \mathbf{C}$ spațiul liniar se
+numește complex.
+
+\subsection{Transformări liniare.}
+\label{ch1:sec_transforms:sub_linear_transforms}
+\newtheorem{th_linear_transform}[theorem_liniar_space]{Definiția}
+Fie $\mathit{F}$ o funcție definită pe $\mathit{L_{n}}$ cu valori in
+$\mathit{L_{n}}$. Funcția $\mathit{F}$ se numește \textit{transformare liniară}
+dacă :
+\begin{enumerate}
+  \item $F(a + b) = F(a) + F(b), \quad \forall a, b \in \mathit{L_{n}}$
+  \item $F(\lambda a) = \lambda F(a), \quad \forall \lambda \in \mathbf{K}$.
+\end{enumerate}
+Dacă $F(a) = a$, atunci $F$ se numește \textit{transformarea identică}. Dacă
+$F(a) = 0, \quad \forall a \in \mathit{L_{n}}$, atunci $F$ se numește
+transformarea nulă.
+
+Să considerăm în spațiul liniar $\mathit{L_{n}}$ o bază $e_{1}, e_{2}, \dots
+e_{n}$, un vector oarecare $a = a_{1}e_{1} + a_{2}e_{2} + \dots + a_{n}e_{n}$
+și $\mathit{F}$ o transformare liniară în $\mathit{L_{n}}$. Fie $h = h_{1},
+h_{2}, \dots h_{n}$ o altă bază în spațiul liniar $\mathit{L_{n}}$ și 
+$b = b_{1}h_{1} + b_{2}h_{2} + \dots b_{n}h_{n}$ un alt vector
+din $\mathit{L_{n}}$.
+Atunci există o transformare pentru care $F(e_{1}) =
+h_{1}, F(e_{2}) = h_{2}, \dots F(e_{n}) = h_{n}$. Dacă scriem
+\begin{equation}
+h_{i} = F(e_{i} = a_{i1}e_{1} + a_{i2}e_{2} + \cdots + a_{in}e_{n},
+\end{equation} transformării $F$ i se asociază matricea 
+\begin{equation}
+A = \Vert a_{ik} \Vert.
+\end{equation}
+\newtheorem{th_lt_matrix}[theorem_liniar_space]{Definiția}
+\begin{th_lt_matrix} 
+Matricea A se numește
+matricea tansformării F în baza $e_{1}, e_{2}, \dots e_{n}$.
+\end{th_lt_matrix}
+Dacă notăm 
+\begin{equation*}
+A =
+\begin{bmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\hdotsfor{4} \\
+a_{n1} & a_{n2} & \dots & a_{nn}
+\end{bmatrix} ,
+\mathbf{h} =
+\begin{bmatrix}
+h_{1} \\
+h_{2} \\
+\vdots \\
+h_{n}
+\end{bmatrix} ,
+\mathbf{e} =
+\begin{bmatrix}
+e_{1} \\
+e_{2} \\
+\vdots \\
+e_{n}
+\end{bmatrix}, 
+\end{equation*} avem relația
+\begin{equation}
+\mathbf{h} = \mathbf{Ae},
+\end{equation} ceea ce justifică pentru $\mathbf{A}$ denumirea de matricea
+transformării $\mathit{F}$.
+Practic, pentru a găsi matricea unei transformări liniare, trebuie determinat
+cum sunt transformați (unde ajung) vectorii bazei.
+\todo{Inserat un exemplu aici}
+Asupra transformărilor liniare pot fi aplicate operațiile de adunare și de
+compunere (produs).
+\newtheorem{th_lin_tr_operations}[theorem_liniar_space]{Definiția}
+\begin{th_lin_tr_operations}
+Fie $\mathit{L_{n}}$ un spațiu liniar, $\mathit{F}$ și $\mathit{G}$ două
+transformări liniare din $\mathit{L_{n}}$, iar $A = \Vert a_{ij} \Vert, B =
+\Vert b_{ij} \Vert$ matricile acestor transfomări.
+\begin{easylist}
+\NewList(Mark={)})
+@ Se numește \textbf{sumă a transformărilor} F și G transformarea $F + G$, care
+face să corespundă vectorlui x, vectorul $F(x) + G(x)$. Matricea transformarii $F + G$
+este $A + B = \Vert a_{ij} + b_{ij} \Vert$ 
+@ Se numește \textbf{produs al transformărilor} F și G transformarea H care
+rezultă din aplicarea transformării F, urmată de aplicarea transformării G. Se
+notează $H = G(F)$ și face să corespundă vectorului x vectorul $G(F(x))$.
+Matricea transformării $H = G(F)$ este produsul celor două matrici.
+\end{easylist}
+\end{th_lin_tr_operations}
+Suma și produsul de transformări liniare au următoarele proprietăți :
+\begin{easylist}
+\NewList(Mark={)},Numbers=a)
+@ $F + G = G + F$
+@ $F + (G + H) = (F + G) + H$
+@ $F(G(H)) = F(G)(H)$
+@ $(F + G)(H) = F(H) + G(H)$
+@ $H(F + G) = H(F) + H(G)$
+\end{easylist}
+Concatenarea (multiplicarea) matricilor mai multor transformări liniare rezultă
+într-o matrice care aplică combinația transformărilor individuale.
+\noindent
+\\
+Unele transformări pot fi inversate.
+
+\newtheorem{th_tr_inverse}[theorem_liniar_space]{Definiția}
+\begin{th_tr_inverse}
+Fie $F(x)$ o transformare care duce vectorul \textit{x} în vectorul \textit{y}.
+Se numește inversa transformării $\mathbf{F}$ și se notează cu $\mathbf{F^{-1}}$
+transformarea care duce vectorul \textit{y} în vectorul \textit{x}.
+Dacă transformarea $\mathbf{F}$ este realizată de matricea
+\[
+A = 
+\begin{bmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\
+a_{21} & a_{22} & \dots & a_{2n} \\
+\hdotsfor{4} \\
+a_{n1} & a_{n2} & \dots & a_{nn}
+\end{bmatrix},
+\] deci $F(x) = Ax$ și matricea A verifică condiția că $det(A) \neq 0$, atunci
+transformarea inversă $\mathbf{F^{-1}}$ este realizată de matricea $A^{-1}$,
+adică inversa matricii A.
+\end{th_tr_inverse}

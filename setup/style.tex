@@ -23,17 +23,20 @@
 \usepackage{todonotes}
 \usepackage{enumerate}
 %\usepackage{fontspec}
-%\setmonofont[Scale=0.8]{Consolas}
+%\setmonofont[Scale=0.8]{Liberation Mono}
 \usepackage{inconsolata}
 \usepackage[chapter]{algorithm}
 \usepackage{algorithmic}
+\usepackage[retainorgcmds]{IEEEtrantools}
+\usepackage[at]{easylist}
 
 % *************** Enable index generation ***************
 \makeindex
 
 % *************** Add reference to page number at which bibliography entry is cited ***************
-\usepackage{citeref}
-\renewcommand{\bibitempages}[1]{\newblock {\scriptsize [\mbox{cited at p.\ }#1]}}
+%\usepackage{citeref}
+%\renewcommand{\bibitempages}[1]{\newblock {\scriptsize [\mbox{cited at p.\
+% }#1]}}
 
 % *************** Some colour definitions ***************
 \usepackage{color}
@@ -110,7 +113,7 @@
 % *************** Source code listings *****************************
 \lstset{
     language=c++,
-    basicstyle=\ttfamily,
+    basicstyle=\small\ttfamily,
     keywordstyle=\color{royalpurple}\bfseries,
     stringstyle=\color{redorange},
     commentstyle=\color{olivegreen},

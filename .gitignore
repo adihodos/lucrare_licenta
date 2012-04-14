@@ -5,3 +5,5 @@ output
 *.prefs
 *.swp
 *.gz
+*.ilg
+*.ind

@@ -1,0 +1,200 @@
+\section{Quaternioni}
+\label{ch1:sec_quaternions}
+\indent
+
+Quaternionii au fost descoperiți de Sir William Rowan Hamilton in secolul al
+XIX-lea. Acesta căuta un mod de a reprezenta numerele complexe in dimensiuni
+superioare. De la descoperirea lor, matematicienii au arătat că quaternionii pot
+fi utilizați pentru a roti puncte în jurul unor axe arbitrare.
+Quaternionii au o serie de avantaje față de matrici. De exemplu, pentru
+stocarea unui quaternion sunt nevoie doar de patru componente, concatenarea lor
+implică mai puține operații aritmetice și sunt mai ușor de interpolat pentru a
+produce animații. Utilizarea lor în grafica 3D a fost pionierată de Shoemake.
+
+\todo{Schimbat titlul}
+\subsection{Proprietățile quaternionilor}
+\label{ch1:sec_quaternions:sub_properties}
+\indent
+
+Mulțimea quaternionilor, cunoscută în matematică sub denumirea de \textit{inelul
+quaternionilor Hamiltonieni} și notată cu $\mathfrak{H}$ poate fi văzută ca
+un spațiu vectorial patru dimensional, ale cărui elemente sunt tuple de 4
+numere reale, de forma 
+\begin{equation}
+q = \langle w, x, y, z\rangle = w + x\mathit{i} + y\mathit{j} + z\mathit{k}.
+\end{equation}
+Un quaternion mai poate fi scris și ca 
+\begin{equation}
+q = \lbrack s, v \rbrack
+\end{equation} unde s este partea scalară, iar v este partea vectorială.
+Hamilton a numit quaternionii ai căror componentă scalară este egală cu zero
+\textit{quaternioni puri}.
+\newpage
+Conceptual, implementarea quaternionului arată în felul următor :
+\begin{lstlisting}[]
+template<typename real_t>
+class quaternion {
+public :
+    union {
+        struct {
+            real_t w_;
+            real_t x_;
+            real_t y_;
+            real_t z_;
+        };
+        real_t elements_[4];
+    };
+
+    quaternion();
+    quaternion(real_t w, real_t x, real_t y, real_t z);
+    quaternion(const real_t* init_data);
+    ...
+};
+\end{lstlisting}
+
+\subsection{Adunarea quaternionilor}
+\label{ch1:sec_quaternions:sub_add}
+Quaternionii se adună și se scad pe componente, ca și vectorii.
+Fiind dați doi quaternioni, $q_1 \text{ și } q_2$, suma lor este quaternionul
+\begin{equation}
+q = q_1 + q_2 = \lbrack s_1 + s_2, v_1 + v_2 \rbrack,
+\end{equation} sau echivalent
+\begin{equation}
+q = q_1 + q_2 = \langle w_1 + w_2, \quad (x_1 + x_2)i, \quad (y_1 + y_2)j, 
+\quad (z_1 + z_2)k \rangle.
+\end{equation}
+
+\noindent
+
+Proprietățile adunării quaternionilor :
+\begin{enumerate}
+    \item Adunarea este comutativă : 
+    $q_1 + q_2 = q_2 + q_1, \quad \forall q_1, q_2 \in \mathfrak{H}$
+    \item Adunarea este asociativă :
+    $(q_1 + q_2) + q_3 = q_1 + (q_2 + q_3), \quad \forall q_1, q_2, q_3
+    \in \mathfrak{H}$
+    \item Element neutru : $\exists q' = \langle 0, 0, 0, 0 \rangle \in 
+    \mathfrak{H} \text{ a. î. } q + q' = q' + q = q, \quad \forall q \in
+    \mathfrak{H}$ 
+    \item Orice quaternion are un opus : $\forall q \in \mathfrak{H} \quad
+    \exists q' = (-q) \in \mathfrak{H} \quad \text{ a.î. } q + q' = q' + q = 
+    \langle 0, 0, 0, 0 \rangle$
+\end{enumerate}
+
+\subsection{Magnitudinea unui quaternion}
+\label{ch1:sec_quaternions:sub_magnitude}
+Similar cu vectorii, magnitudinea unui quaternion este dată de formula
+\begin{equation}
+\Vert q \Vert = \sqrt{w^2 + x^2 + y^2 + z^2}.
+\end{equation}
+Un quaternion care are o magnitudine de unu se spune că este un
+\textit{quaternion unitate}. Componentele unui quaternion unitate verifică
+relația
+\begin{equation}
+w^2 + v \cdot v = 1.
+\end{equation}
+Similar vectorilor, un quaternion cu o magnitudine
+non-zero poate fi adus la lungime unitate prin operația de normalizare, adică
+\begin{equation}
+\hat{q} = \frac{q}{\Vert q \Vert}.
+\end{equation}
+Fie q și r quaternioni din $\mathfrak{H}$. Se verifică următoarele relații :
+\begin{enumerate}
+    \item $\Vert q \Vert ^ 2 = w^2 + v \cdot v$
+    \item $\Vert q \Vert = 0 \iff q = \langle 0, 0, 0, 0 \rangle$
+    \item $\Vert \mathit{a}q \Vert = \vert \mathit{a} \vert \Vert q \Vert$
+    \item $\Vert q + r \Vert \leq \Vert q \Vert + \Vert r \Vert$
+\end{enumerate}
+
+\subsection{Produs scalar}
+\label{ch1:sec_quaternions:sub_scalar_product}
+Produsul scalar a doi quaternioni este similar cu produsul scalar a doi vectori,
+fiind suma produselor componentelor celor doi operanzi. Fie $q_{1} \text{ și }
+q_{2}$ doi quaternioni din $\mathfrak{H}$. Atunci produsul scalar al lor este dat de
+formula
+\begin{equation}
+q_{1} \cdot q_{2} = \sum_{i = 1}^{4} q_{1i}q_{2i} 
+\end{equation} sau echivalent
+\begin{equation}
+q_{1} \cdot q_{2} = w_{1}w_{2} + x_{1}x_{2} + y_{1}y_{2} + z_{1}z_{2}.
+\end{equation}
+Produsul scalar mai verifică și următoarele relații :
+\begin{enumerate}
+\item $q_1 \cdot q_2 = q_2 \cdot q_1$
+\item $q \cdot q = \Vert q \Vert ^ 2$
+\item $q_1 \cdot q_2 = 1 \Rightarrow q_1 \perp q_2$
+\item $(\mathit{a}q_1) \cdot q_2 = \mathit{a}(q_1 \cdot q_2)$
+\end{enumerate}
+\todo{Verificat chestia asta din VanVerth}
+Produsul scalar a doi quaternioni dă o masură a diferenței dintre rotațiile
+aplicate de cei doi quaternioni. Cand acesta ia valori apropiate de 1, cei doi
+quaternioni aplică rotații similare. Cand ia valori apropiate de -1, rotațiile
+aplicate sunt foarte diferite.
+
+\subsection{Înmulțirea quaternionilor}
+Fiind dați doi quaternioni
+\begin{IEEEeqnarray*}{rCl}
+q_{1} = w_{1} + v_{1} = w_{1} + x_{1}\mathit{i} + y_{1}\mathit{j} 
+                         + z_{1}\mathit{k},\\
+q_{2} = w_{2} + v_{2} = w_{2} + x_{2}\mathit{i} + y_{2}\mathit{j}
+                        + z_{2}\mathit{k},
+\end{IEEEeqnarray*}
+produsul lor este dat de
+\begin{IEEEeqnarray*}{rCl}
+q_{1}q_{2} = (w_{1}w_{2} - x_{1}x_{2} - y_{1}y_{2} - z_{1}z_{2})\\
++ (w_{1}x_{2} + x_{1}w_{2} + y_{2}z_{2} - z_{1}y_{2})\mathit{i}\\
++ (w_{1}y_{2} - x_{1}z_{2} + y_{1}w_{2} + z_{1}x_{2})\mathit{j}\\
++ (w_{1}z_{2} + x_{1}y_{2} - y_{1}x_{2} + z_{1}w_{2})\mathit{k}\IEEEyesnumber
+\end{IEEEeqnarray*} sau echivalent
+\begin{equation}
+q_{1}q_{2} = w_{1}w_{2} - v_{1} \cdot v_{2} + w_{1}v_{2} + w_{2}v_{1} +
+v_{1} \times v_{2}.
+\end{equation}
+Se poate observa că produsul a doi quaternioni este necomutativ, deoarece
+conține un produs vectorial în componența sa.
+
+Proprietățile înmulțirii quaternionilor.
+\begin{enumerate}
+    \item $q_{1}q_{2} \neq q_{2}q_{1}, \quad \forall q_{1}, q_{2} \in
+    \mathfrak{H}$
+    \item $q_{1}(q_{2}q_{3}) = (q_{1}q_{2})q_{3}, \quad \forall q_{1}, q_{2},
+    q_{3} \in \mathfrak{H}$
+    \item $\exists q_{I} \in \mathfrak{H} \text{ a.î. } qq_{I} = q_{I}q = q,
+    \forall q \in \mathfrak{H}$
+    \item $\exists q^{-1} \in \mathfrak{H} \text{ a.î. } qq^{-1} = q^{-1}q =
+    q_{I}, \quad \forall q \in \mathfrak{H}$
+    \item $q_{1}(q_{2} + q_{3}) = q_{1}q_{2} + q_{1}q_{3} \quad \forall q_{1},
+    q_{2}, q_{3} \in \mathfrak{H}$
+\end{enumerate}
+
+\subsection{Conjugata unui quaternion}
+Ca și numerele complexe, quaternionii au conjugate.
+Dacă $q = s + v$ este un quaternion din $\mathfrak{H}$, atunci conjugatul său este
+quaternionul
+\begin{equation}
+\bar{q} = s - v = s - (x\mathit{i} + y\mathit{j} + z\mathit{k}).
+\end{equation}
+Dacă efectuăm produsul între un quaternion și conjugatul său, obținem :
+\[
+q\bar{q} = w\bar{w} - v \cdot \bar{v} + w\bar{v} + \bar{w}v + v \times \bar{v}.
+\]
+Cum $v = -\bar{v} \text{ și } w = \bar{w}$ rezultă că $q\bar{q} = w^2 +
+v\cdot v$, adică există identitatea : 
+\begin{equation}
+q\bar{q} = \bar{q}q = q \cdot q = \Vert q \Vert ^ 2.
+\end{equation}
+
+\subsection{Inversa unui quaternion}
+Inversul unui quaternion non-zero $q \in \mathfrak{H}$ este quaternionul dat de 
+formula
+\begin{equation}
+\label{eq:quat_inverse}
+q^{-1} = \frac{\bar{q}}{\Vert q \Vert ^ 2}.
+\end{equation}
+Dacă q este un \textit{quaternion de magnitudine unitate}, formula
+\eqref{eq:quat_inverse} poate fi redusă la
+\begin{equation}
+q^{-1} = \bar{q}.
+\end{equation}
+
+\subsection{Rotirea vectorilor}
