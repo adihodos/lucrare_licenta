@@ -1,12 +1,6 @@
 template<typename real_t>
 class vector3 {
 public:
-    enum { 
-        is_floating_point = implementation_details::types_eq<real_t, float>::result 
-                            || implementation_details::types_eq<real_t, double>::result 
-                            || implementation_details::types_eq<real_t, long double>::result
-    };
-
     typedef real_t          element_type;
     typedef real_t&         reference;
     typedef const real_t&   const_reference;
@@ -18,12 +12,13 @@ public:
             real_t y_;
             real_t z_;
         };
-        real_t elements_[3];	///< Allows array like access to the elements */
+        real_t elements_[3];
     };
 
     vector3() {}
 
-    vector3(real_t x, real_t y, real_t z) : x_(x), y_(y), z_(z) {}
+    vector3(real_t x, real_t y, real_t z) 
+        : x_(x), y_(y), z_(z) {}
 
     inline vector3(const real_t* input, size_t count);
 

@@ -1,5 +1,5 @@
 \section{Quaternioni}
-\label{ch1:sec_quaternions}
+\label{ch1:quaternions}
 \indent
 
 Quaternionii au fost descoperiți de Sir William Rowan Hamilton in secolul al
@@ -13,11 +13,11 @@ produce animații. Utilizarea lor în grafica 3D a fost pionierată de Shoemake.
 
 \todo{Schimbat titlul}
 \subsection{Proprietățile quaternionilor}
-\label{ch1:sec_quaternions:sub_properties}
+\label{ch1:quaternions:properties}
 \indent
 
 Mulțimea quaternionilor, cunoscută în matematică sub denumirea de \textit{inelul
-quaternionilor Hamiltonieni} și notată cu $\mathfrak{H}$ poate fi văzută ca
+quaternionilor Hamiltonieni} și notată cu $\mathbb{H}$ poate fi văzută ca
 un spațiu vectorial patru dimensional, ale cărui elemente sunt tuple de 4
 numere reale, de forma 
 \begin{equation}
@@ -53,7 +53,7 @@ public :
 \end{lstlisting}
 
 \subsection{Adunarea quaternionilor}
-\label{ch1:sec_quaternions:sub_add}
+\label{ch1:quaternions:addition}
 Quaternionii se adună și se scad pe componente, ca și vectorii.
 Fiind dați doi quaternioni, $q_1 \text{ și } q_2$, suma lor este quaternionul
 \begin{equation}
@@ -69,20 +69,20 @@ q = q_1 + q_2 = \langle w_1 + w_2, \quad (x_1 + x_2)i, \quad (y_1 + y_2)j,
 Proprietățile adunării quaternionilor :
 \begin{enumerate}
     \item Adunarea este comutativă : 
-    $q_1 + q_2 = q_2 + q_1, \quad \forall q_1, q_2 \in \mathfrak{H}$
+    $q_1 + q_2 = q_2 + q_1, \quad \forall q_1, q_2 \in \mathbb{H}$
     \item Adunarea este asociativă :
     $(q_1 + q_2) + q_3 = q_1 + (q_2 + q_3), \quad \forall q_1, q_2, q_3
-    \in \mathfrak{H}$
+    \in \mathbb{H}$
     \item Element neutru : $\exists q' = \langle 0, 0, 0, 0 \rangle \in 
-    \mathfrak{H} \text{ a. î. } q + q' = q' + q = q, \quad \forall q \in
-    \mathfrak{H}$ 
-    \item Orice quaternion are un opus : $\forall q \in \mathfrak{H} \quad
-    \exists q' = (-q) \in \mathfrak{H} \quad \text{ a.î. } q + q' = q' + q = 
+    \mathbb{H} \text{ a. î. } q + q' = q' + q = q, \quad \forall q \in
+    \mathbb{H}$ 
+    \item Orice quaternion are un opus : $\forall q \in \mathbb{H} \quad
+    \exists q' = (-q) \in \mathbb{H} \quad \text{ a.î. } q + q' = q' + q = 
     \langle 0, 0, 0, 0 \rangle$
 \end{enumerate}
 
 \subsection{Magnitudinea unui quaternion}
-\label{ch1:sec_quaternions:sub_magnitude}
+\label{ch1:quaternions:magnitude}
 Similar cu vectorii, magnitudinea unui quaternion este dată de formula
 \begin{equation}
 \Vert q \Vert = \sqrt{w^2 + x^2 + y^2 + z^2}.
@@ -98,7 +98,7 @@ non-zero poate fi adus la lungime unitate prin operația de normalizare, adică
 \begin{equation}
 \hat{q} = \frac{q}{\Vert q \Vert}.
 \end{equation}
-Fie q și r quaternioni din $\mathfrak{H}$. Se verifică următoarele relații :
+Fie q și r quaternioni din $\mathbb{H}$. Se verifică următoarele relații :
 \begin{enumerate}
     \item $\Vert q \Vert ^ 2 = w^2 + v \cdot v$
     \item $\Vert q \Vert = 0 \iff q = \langle 0, 0, 0, 0 \rangle$
@@ -107,10 +107,10 @@ Fie q și r quaternioni din $\mathfrak{H}$. Se verifică următoarele relații :
 \end{enumerate}
 
 \subsection{Produs scalar}
-\label{ch1:sec_quaternions:sub_scalar_product}
+\label{ch1:quaternions:scalar_product}
 Produsul scalar a doi quaternioni este similar cu produsul scalar a doi vectori,
 fiind suma produselor componentelor celor doi operanzi. Fie $q_{1} \text{ și }
-q_{2}$ doi quaternioni din $\mathfrak{H}$. Atunci produsul scalar al lor este dat de
+q_{2}$ doi quaternioni din $\mathbb{H}$. Atunci produsul scalar al lor este dat de
 formula
 \begin{equation}
 q_{1} \cdot q_{2} = \sum_{i = 1}^{4} q_{1i}q_{2i} 
@@ -132,6 +132,7 @@ quaternioni aplică rotații similare. Cand ia valori apropiate de -1, rotațiil
 aplicate sunt foarte diferite.
 
 \subsection{Înmulțirea quaternionilor}
+\label{ch1:quaternions:multiplication}
 Fiind dați doi quaternioni
 \begin{IEEEeqnarray*}{rCl}
 q_{1} = w_{1} + v_{1} = w_{1} + x_{1}\mathit{i} + y_{1}\mathit{j} 
@@ -156,20 +157,21 @@ conține un produs vectorial în componența sa.
 Proprietățile înmulțirii quaternionilor.
 \begin{enumerate}
     \item $q_{1}q_{2} \neq q_{2}q_{1}, \quad \forall q_{1}, q_{2} \in
-    \mathfrak{H}$
+    \mathbb{H}$
     \item $q_{1}(q_{2}q_{3}) = (q_{1}q_{2})q_{3}, \quad \forall q_{1}, q_{2},
-    q_{3} \in \mathfrak{H}$
-    \item $\exists q_{I} \in \mathfrak{H} \text{ a.î. } qq_{I} = q_{I}q = q,
-    \forall q \in \mathfrak{H}$
-    \item $\exists q^{-1} \in \mathfrak{H} \text{ a.î. } qq^{-1} = q^{-1}q =
-    q_{I}, \quad \forall q \in \mathfrak{H}$
+    q_{3} \in \mathbb{H}$
+    \item $\exists q_{I} \in \mathbb{H} \text{ a.î. } qq_{I} = q_{I}q = q,
+    \forall q \in \mathbb{H}$
+    \item $\exists q^{-1} \in \mathbb{H} \text{ a.î. } qq^{-1} = q^{-1}q =
+    q_{I}, \quad \forall q \in \mathbb{H}$
     \item $q_{1}(q_{2} + q_{3}) = q_{1}q_{2} + q_{1}q_{3} \quad \forall q_{1},
-    q_{2}, q_{3} \in \mathfrak{H}$
+    q_{2}, q_{3} \in \mathbb{H}$
 \end{enumerate}
 
 \subsection{Conjugata unui quaternion}
+\label{ch1:quaternions:conjugate}
 Ca și numerele complexe, quaternionii au conjugate.
-Dacă $q = s + v$ este un quaternion din $\mathfrak{H}$, atunci conjugatul său este
+Dacă $q = s + v$ este un quaternion din $\mathbb{H}$, atunci conjugatul său este
 quaternionul
 \begin{equation}
 \bar{q} = s - v = s - (x\mathit{i} + y\mathit{j} + z\mathit{k}).
@@ -185,7 +187,8 @@ q\bar{q} = \bar{q}q = q \cdot q = \Vert q \Vert ^ 2.
 \end{equation}
 
 \subsection{Inversa unui quaternion}
-Inversul unui quaternion non-zero $q \in \mathfrak{H}$ este quaternionul dat de 
+\label{ch1:quaternions:inverse}
+Inversul unui quaternion non-zero $q \in \mathbb{H}$ este quaternionul dat de 
 formula
 \begin{equation}
 \label{eq:quat_inverse}
@@ -198,3 +201,5 @@ q^{-1} = \bar{q}.
 \end{equation}
 
 \subsection{Rotirea vectorilor}
+\label{ch1:quaternions:vector_rotation}
+Tra la la. Lorem dolor ipsicum si alte bazaconii de-astea. Test Test!!!.
