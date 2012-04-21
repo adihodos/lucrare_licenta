@@ -247,8 +247,8 @@ Egalitatea \eqref{mat:det_compute2} poartă denumirea de \textit{dezvoltarea
 determinantului d după coloana j}.
 
 Codul pentru calcularea determinantului unei matrici se folosește însă de alt
-procedeu și anume regula lui \textbf{Laplace}.
-\newtheorem{th_laplace_rule}{Teorema lui Laplace}
+procedeu și anume \textbf{regula lui Laplace}.
+\newtheorem*{th_laplace_rule}{Teoremă (regula lui Laplace)}
 \begin{th_laplace_rule}
 Un determinant este egal cu suma tuturor produselor dintre determinanții minori
 formați cu elementele a \textit{p} linii sau coloane date cu complementele lor
@@ -456,11 +456,68 @@ matricii \textbf{A}.
 
 Librăria \textbf{gfx\_lib} conține clase pentru matrici pătratice de ordinul 2,
 3 și 4, precum și pentru matrici de dimensiuni arbitrare. Clasele sunt
-similare ca și concept si funcționalitate, cu unele diferențe. Clasele sunt clase template,
-fiind parametrizate cu tipul elementelor stocate, permițând astfel matrici cu
-elemente numere intregi sau matrici cu elemente numere reale stocate prin
-reprezentare în virgulă mobilă cu simplă/dublă precizie. De asemenea, ele oferă
-suport pentru operațiile cu matrici prezentate anterior (transpunerea unei
-matrici, calcularea determinantului, a inversei (dacă există), adunare,
-scădere, inmulțire cu scalari/matrici, etc).
+similare ca și concept si funcționalitate, cu unele diferențe. 
+Clasele sunt clase template, fiind parametrizate cu tipul elementelor stocate,
+permițând astfel matrici cu elemente numere intregi sau matrici cu elemente
+numere reale stocate prin reprezentare în virgulă mobilă cu simplă/dublă
+precizie. Elementele matricii sunt stocate în memorie folosing un array
+unidimensional (row major ordering).
+
+\begin{lstlisting}
+template<typename real_t>
+class matrix_3X3 {
+public:
+
+    union {
+        struct {
+            //
+            // First row
+            real_t a11_, a12_, a13_;
+            //
+            // Second row
+            real_t a21_, a22_, a23_;
+            //
+            // Third row
+            real_t a31_, a32_, a33_;
+        };
+        real_t elements_[9];
+    };
+
+\end{lstlisting}
+Operatorul de indexare pentru o astfel de reprezentare a matricii arată în felul
+următor :
+\begin{lstlisting}
+template<typename real_t>
+class matrix_3X3 {
+    int index_at(int row, int col) const {
+        return (row - 1) * 3 + col - 1;
+    }
+
+    real_t& operator()(int row, int col) {
+        return elements_[index_at(row, col)];
+    }
+
+    real_t operator()(int row, int col) const {
+        return elements_[index_at(row, col)];
+    }
+    ...
+};
+\end{lstlisting}
+
+Accesul la elementele individuale poate fi direct (a11\_)
+\begin{lstlisting}
+gfx::matrix_3X3F m1(...);
+m1.a11_ = 0.33f;
+\end{lstlisting}
+sau prin utilizarea operatorului de indexare, specificând linia și coloana
+elementului respectiv (utilizând indecși care încep la 1)
+\begin{lstlisting}
+gfx::matrix_3X3F m1(...);
+m1(1,1) = 0.33f;
+\end{lstlisting}.
+ 
+De asemenea, ele oferă suport pentru operațiile cu matrici prezentate
+anterior (transpunerea unei matrici, calcularea determinantului, a inversei
+(dacă există), adunare, scădere, inmulțire cu scalari/matrici, etc).
+
 \todo{Inserat cod sursa pentru matrici aici}
