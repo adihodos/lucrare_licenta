@@ -7,3 +7,9 @@ output
 *.gz
 *.ilg
 *.ind
+*.lof
+*.log
+*.lot
+*.out
+*.toc
+

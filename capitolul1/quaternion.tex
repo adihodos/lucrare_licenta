@@ -29,9 +29,14 @@ q = \lbrack s, v \rbrack
 \end{equation} unde s este partea scalară, iar v este partea vectorială.
 Hamilton a numit quaternionii ai căror componentă scalară este egală cu zero
 \textit{quaternioni puri}.
-\newpage
-Conceptual, implementarea quaternionului arată în felul următor :
-\begin{lstlisting}[]
+%\newpage
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
 template<typename real_t>
 class quaternion {
 public :
@@ -48,6 +53,7 @@ public :
     quaternion();
     quaternion(real_t w, real_t x, real_t y, real_t z);
     quaternion(const real_t* init_data);
+    quaternion(const vector3<real_t>&, real_t w = real_t(0));
     ...
 };
 \end{lstlisting}
@@ -64,8 +70,26 @@ q = q_1 + q_2 = \langle w_1 + w_2, \quad (x_1 + x_2)i, \quad (y_1 + y_2)j,
 \quad (z_1 + z_2)k \rangle.
 \end{equation}
 
-\noindent
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
+template<typename real_t>
+gfx::quaternion<real_t>&
+gfx::quaternion<real_t>::operator +=(
+    const gfx::quaternion<real_t>& rhs
+    )
+{
+    w_ += rhs.w_; x_ += rhs.x_; y_ += rhs.y_; z_ += rhs.z_;
+    return *this;
+}
 
+\end{lstlisting}
+
+\noindent
 Proprietățile adunării quaternionilor :
 \begin{enumerate}
     \item Adunarea este comutativă : 
@@ -106,6 +130,38 @@ Fie q și r quaternioni din $\mathbb{H}$. Se verifică următoarele relații :
     \item $\Vert q + r \Vert \leq \Vert q \Vert + \Vert r \Vert$
 \end{enumerate}
 
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
+template<typename real_t>
+inline real_t gfx::quaternion<real_t>::length_squared() const {
+    return w_ * w_ + x_ * x_ + y_ * y_ + z_ * z_;
+}
+
+template<typename real_t>
+inline real_t gfx::quaternion<real_t>::magnitude() const {
+    return std::sqrt(length_squared());
+}
+
+template<typename real_t>
+gfx::quaternion<real_t>& gfx::quaternion<real_t>::normalize() {
+    const real_t len_sq = length_squared();
+    if (math::operands_eq(real_t(0), len_sq))
+        return make_zero();
+
+    const real_t scale_factor = real_t(1) / len_sq;
+    w_ *= scale_factor; 
+    x_ *= scale_factor; 
+    y_ *= scale_factor; 
+    z_ *= scale_factor;
+    return *this;
+}
+\end{lstlisting}
+
 \subsection{Produs scalar}
 \label{ch1:quaternions:scalar_product}
 Produsul scalar a doi quaternioni este similar cu produsul scalar a doi vectori,
@@ -131,6 +187,26 @@ aplicate de cei doi quaternioni. Cand acesta ia valori apropiate de 1, cei doi
 quaternioni aplică rotații similare. Cand ia valori apropiate de -1, rotațiile
 aplicate sunt foarte diferite.
 
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
+template<typename real_t>
+inline
+real_t
+gfx::dot_product(
+    const gfx::quaternion<real_t>& lhs, 
+    const gfx::quaternion<real_t>& rhs
+    )
+{
+    return lhs.x_ * rhs.x_ + lhs.y_ * rhs.y_ 
+           + lhs.z_ * rhs.z_ + lhs.w_ * rhs.w_;
+}
+\end{lstlisting}
+
 \subsection{Înmulțirea quaternionilor}
 \label{ch1:quaternions:multiplication}
 Fiind dați doi quaternioni
@@ -153,7 +229,6 @@ v_{1} \times v_{2}.
 \end{equation}
 Se poate observa că produsul a doi quaternioni este necomutativ, deoarece
 conține un produs vectorial în componența sa.
-
 Proprietățile înmulțirii quaternionilor.
 \begin{enumerate}
     \item $q_{1}q_{2} \neq q_{2}q_{1}, \quad \forall q_{1}, q_{2} \in
@@ -167,6 +242,35 @@ Proprietățile înmulțirii quaternionilor.
     \item $q_{1}(q_{2} + q_{3}) = q_{1}q_{2} + q_{1}q_{3} \quad \forall q_{1},
     q_{2}, q_{3} \in \mathbb{H}$
 \end{enumerate}
+
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+]
+template<typename real_t>
+gfx::quaternion<real_t>
+gfx::operator*(
+    const gfx::quaternion<real_t>& lhs, 
+    const gfx::quaternion<real_t>& rhs
+    )
+{
+    vector3<real_t> v1(lhs.x_, lhs.y_, lhs.z_);
+    vector3<real_t> v2(rhs.x_, rhs.y_, rhs.z_);
+
+    quaternion<real_t> result;
+    result.w_ = lhs.w_ * rhs.w_ - dot_product(v1, v2);
+    result.x_ = lhs.w_ * rhs.x_ + rhs.w_ * lhs.x_ 
+                + lhs.y_ * rhs.z_ - lhs.z_ * rhs.y_;
+    result.y_ = lhs.w_ * rhs.y_ + rhs.w_ * lhs.y_ 
+                + lhs.z_ * rhs.x_ - lhs.x_ * rhs.z_;
+    result.z_ = lhs.w_ * rhs.z_ + rhs.w_ * lhs.z_ 
+                + lhs.x_ * rhs.y_ - lhs.y_ * rhs.x_;
+    return result;
+}
+\end{lstlisting}
 
 \subsection{Conjugata unui quaternion}
 \label{ch1:quaternions:conjugate}
@@ -199,6 +303,30 @@ Dacă q este un \textit{quaternion de magnitudine unitate}, formula
 \begin{equation}
 q^{-1} = \bar{q}.
 \end{equation}
+
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
+template<typename real_t>
+gfx::quaternion<real_t>& gfx::quaternion<real_t>::invert() {
+    const real_t len_sq = length_squared();
+    if (math::operands_eq(real_t(0), len_sq)) {
+        return make_identity();
+    }
+
+    const real_t scale_factor = 1 / len_sq;
+    w_ *= scale_factor;
+    x_ = (-x_ * scale_factor);
+    y_ = (-y_ * scale_factor);
+    z_ = (-z_ * scale_factor);
+
+    return *this;
+}
+\end{lstlisting}
 
 \subsection{Rotirea vectorilor}
 \label{ch1:quaternions:vector_rotation}

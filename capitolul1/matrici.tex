@@ -319,33 +319,30 @@ D =
 = -5.
 \end{align*}
 
-\noindent
-Iată și codul funcției membre pentru calcularea determinantului.
-\begin{lstlisting}[]
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
 template<typename real_t>
-real_t
-gfx::matrix_4X4<real_t>::determinant() const {
+real_t gfx::matrix_4X4<real_t>::determinant() const {
     const real_t k1 = a11_ * a22_ - a12_ * a21_;
     const real_t l1 = a33_ * a44_ - a34_ * a43_;
-
     const real_t k2 = a11_ * a23_ - a13_ * a21_;
     const real_t l2 = a32_ * a44_ - a34_ * a42_;
-
     const real_t k3 = a11_ * a24_ - a14_ * a21_;
     const real_t l3 = a32_ * a43_ - a33_ * a42_;
-
     const real_t k4 = a12_ * a23_ - a13_ * a22_;
     const real_t l4 = a31_ * a44_ - a43_ * a41_;
-
     const real_t k5 = a12_ * a24_ - a14_ * a22_;
     const real_t l5 = a31_ * a43_ - a33_ * a41_;
-
     const real_t k6 = a13_ * a24_ - a14_ * a23_;
     const real_t l6 = a31_ * a42_ - a32_ * a41_;
 
-    return k1 * l1 - k2 * l2 + k3 * l3 
-           + k4 * l4 - k5 * l5 
-           + k6 * l6;
+    return k1 * l1 - k2 * l2 + k3 * l3 + k4 * l4 
+           - k5 * l5 + k6 * l6;
 }
 
 \end{lstlisting}
@@ -455,38 +452,41 @@ matricii \textbf{A}.
 \indent
 
 Librăria \textbf{gfx\_lib} conține clase pentru matrici pătratice de ordinul 2,
-3 și 4, precum și pentru matrici de dimensiuni arbitrare. Clasele sunt
-similare ca și concept si funcționalitate, cu unele diferențe. 
-Clasele sunt clase template, fiind parametrizate cu tipul elementelor stocate,
+3 și 4. Clasele sunt similare ca și concept si funcționalitate, cu unele diferențe. 
+Clasele sunt clase template, fiind parametrizate cu tipul elementelor,
 permițând astfel matrici cu elemente numere intregi sau matrici cu elemente
 numere reale stocate prin reprezentare în virgulă mobilă cu simplă/dublă
 precizie. Elementele matricii sunt stocate în memorie folosing un array
-unidimensional (row major ordering).
-
-\begin{lstlisting}
+unidimensional si ordonare după liniile matricii (row major ordering).
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
 template<typename real_t>
 class matrix_3X3 {
 public:
-
     union {
         struct {
-            //
-            // First row
             real_t a11_, a12_, a13_;
-            //
-            // Second row
             real_t a21_, a22_, a23_;
-            //
-            // Third row
             real_t a31_, a32_, a33_;
         };
         real_t elements_[9];
     };
-
+    ...
+};
 \end{lstlisting}
+
 Operatorul de indexare pentru o astfel de reprezentare a matricii arată în felul
 următor :
-\begin{lstlisting}
+\begin{lstlisting}[title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
 template<typename real_t>
 class matrix_3X3 {
     int index_at(int row, int col) const {
@@ -504,17 +504,44 @@ class matrix_3X3 {
 };
 \end{lstlisting}
 
-Accesul la elementele individuale poate fi direct (a11\_)
-\begin{lstlisting}
-gfx::matrix_3X3F m1(...);
-m1.a11_ = 0.33f;
+Accesul la elementele individuale poate fi direct sau prin utilizarea 
+operatorului de indexare, specificând linia și coloana elementului respectiv 
+(utilizând indecși care încep la 1).
+\begin{lstlisting}[title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+    //
+    // acces direct
+    gfx::matrix_3X3F m1(...);
+    m1.a11_ = 0.33f;
+    //
+    // acces folosing functia membru operator()(int, int)
+    m1(1,1) = 0.33f;
 \end{lstlisting}
-sau prin utilizarea operatorului de indexare, specificând linia și coloana
-elementului respectiv (utilizând indecși care încep la 1)
-\begin{lstlisting}
-gfx::matrix_3X3F m1(...);
-m1(1,1) = 0.33f;
-\end{lstlisting}.
+
+Constructorul default lasă elementele matricii neinițializate. Există o serie de 
+constructori care oferă suport pentru diferite modalități de inițializare 
+(specificarea individuală a elementelor, copierea dintr-un array existent, 
+matrice diagonală, simetrică, anti-simetrică).
+\begin{lstlisting}[title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+matrix_3X3();
+
+matrix_3X3(
+    real_t a11, real_t a12, real_t a13,
+    real_t a21, real_t a22, real_t a23,
+    real_t a31, real_t a32, real_t a33
+    );
+
+matrix_3X3(const real_t* input, size_t count);
+
+matrix_3X3(real_t a11, real_t a22, real_t a33);
+\end{lstlisting}
  
 De asemenea, ele oferă suport pentru operațiile cu matrici prezentate
 anterior (transpunerea unei matrici, calcularea determinantului, a inversei
