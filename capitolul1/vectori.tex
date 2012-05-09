@@ -6,353 +6,119 @@ Vectorii au o importanță fundamentală pentru orice aplicație 3D. Ei sunt
 utilizați pentru a reprezenta puncte in spațiu, precum locațiile obiectelor sau
 verticele unei meșe de triunghiuri. De asemenea sunt utilizați pentru a
 reprezenta direcții în spațiu, precum orientarea camerei sau normalii la
-suprafață ai unei meșe de triunghiuri.
+suprafață într-o meșă de triunghiuri.
 
-\subsection{Proprietățile vectorilor}
+\subsection{Implementarea conceptului de vector în codul aplicației}
 \label{ch1:sec_vectors:sub_properties}
-\indent 
-
-Deși sunt posibile definiții mai abstracte, ne vom concentra asupra vectorilor
-definiți prin \textit{n}-tuple de numere reale, unde \textit{n} este de obicei
-2, 3 sau 4. Un vector \textit{n}-dimensional \textbf{V} poate fi scris ca
-\begin{equation}
-\label{eq:vec:1}
-\mathbf{V} = \langle V_1, V_2, \dots V_n \rangle,
-\end{equation}  unde numerele $\mathit{V_i}$ se numesc componentele vectorului
-\textbf{V}.
-Vectorul din ecuația \eqref{eq:vec:1} poate fi reprezentat și printr-o matrice
-cu o singură coloană și \textit{n} linii :
-\begin{equation}
-\label{eq:vec:2}
-\mathbf{V} = 
-\begin{bmatrix}
-V_1 \\
-V_2 \\
-\vdots \\
-V_n
-\end{bmatrix}.
-\end{equation} 
-În mod normal vectorii vor fi exprimați în acest fel, uneori însă apare nevoia
-de a exprima un vector ca și o matrice cu o singură linie și \textit{n} coloane.
-Vom scrie un vector linie ca și transpusul vectorului coloană corespunzător :
-\begin{equation}
-\label{eq:vec:3}
-\mathbf{V^T} = 
-\begin{bmatrix}
-V_1, \quad V_2, \quad \dots \quad V_n
-\end{bmatrix}.
-\end{equation}
-
-\indent
- Un vector poate fi multiplicat cu un scalar pentru a produce un
-nou vector ale cărui componente au aceeași proporție relativă. Produsul dintre
-scalarul \textit{a} și vectorul \textbf{V} este definit ca :
-\begin{equation}
-\label{eq:vec:4}
-\mathit{a}\mathbf{V} = \mathbf{V}\mathit{a} = \langle \mathit{a}V_1, \quad
-\mathit{a}V_2, \quad \dots \quad \mathit{a}V_n \rangle.
-\end{equation}
-
-\indent
-Vectorii se adună și se scad pe componente. Dîndu-se doi vectori \textbf{P} și
-\textbf{Q}, definim suma lor \textbf{P + Q} ca :
-\begin{equation}
-\label{eq:vec:5}
-\mathbf{P + Q} = \langle P_1 + Q_1, \quad P_2 + Q_2 \quad \dots \quad P_n + Q_n
-\rangle.
-\end{equation}
-Diferența a doi vectori, scrisă ca și \textbf{P - Q} este doar o simplificare a
-notației pentru suma \textbf{P + (-Q)}.\\
-Vom examina acum cîteva proprietăți fundamentale ale aritmeticii cu vectori.
-
-%\theoremstyle{definition} 
-\newtheorem{vector_arith}{Teorema}
-
-\begin{vector_arith}
-Oricare ar fi doi scalari \textit{a} și \textit{b} cu \textit{a}, \textit{b}
-$\in \mathbf{R}$ și oricare trei vectori \textbf{P, Q, R} cu $\mathbf{P},
-\mathbf{Q}, \mathbf{R} \in \mathbf{R^n}$, următoarele proprietăți sunt
-adevărate.
-\begin{enumerate}
-  \item $\mathbf{P + Q = Q + P}$ - adunarea este este comutativă.
-  \item $\mathbf{(P + Q) + R = P + (Q + R)}$ - adunarea este asociativă.
-  \item $\mathit{(ab)}\mathbf{P} = \mathit{a(b}\mathbf{P}\mathit{)}$ -
-  asociativitatea înmulțirii cu scalari.
-  \item $\mathit{a(\mathbf{P + Q})} = \mathit{a}\mathbf{Q} +
-  \mathit{b}\mathbf{Q}$ - înmulțirea cu scalari este distributivă față de
-  adunarea vectorilor.
-  \item $\mathit{(a + b)}\mathbf{P} = \mathit{a}\mathbf{P} +
-  \mathit{b}\mathbf{P}$ - înmulțirea vectorilor este distributivă față de
-  adunarea scalarilor.
-\end{enumerate}
-\end{vector_arith}
-
-\indent
-\textit{Magnitudinea} unui vector \textit{n}-dimensional \textbf{B} este un
-scalar notat cu $\Vert \mathbf{V} \Vert$ și este dat de formula :
-\begin{equation}
-\label{eq:vec:6}
-\Vert \mathbf{V} \Vert = \sqrt{\sum_{i = 1}^{n} V_i^2}.
-\end{equation}
-Magnitudinea unui vector se mai numește și \textit{norma} sau \textit{lungimea}
-unui vector. Un vector cu o magnitudine de unu se spune ca are \textit{lungime
-unitate}, sau că este un \textit{vector unitate}. Atunci cînd \textbf{V}
-reprezintă un vector din $\mathbf{R^3}$, equația \eqref{eq:vec:6} poate fi
-scrisă ca :
-\begin{equation}
-\label{eq:vec:7}
-\Vert \mathbf{V} \Vert = \sqrt{V_x^2 + V_y^2 + V_z^2}.
-\end{equation}
-
-\indent
-Un vector care are cel puțin o componentă non-zero poate fi redimensionat la
-lungimea unitate prin multiplicare cu $\frac{1}{\Vert \mathbf{V} \Vert}$.
-Această operație se mai numește și normalizare.
-
-\indent
-Magnitudinea unui vector are următoarele proprietăți.
-\newtheorem{mag_vectors}[vector_arith]{Teorema}
-\begin{mag_vectors}
-Oricare ar fi scalarul $\mathit{a} \in \mathbf{R}$ și oricare ar fi doi vectori
-$\mathbf{P, Q} \in \mathbf{R^n}$, următoarele proprietăți sunt adevărate.
-\begin{enumerate}
-  \item $\Vert \mathbf{P} \Vert \geq 0$
-  \item $\Vert \mathbf{P} \Vert = 0 \iff \mathbf{P} = \langle 0, \quad 0, \quad
-  \dots \quad 0 \rangle$
-  \item $\Vert \mathit{a}\mathbf{P} \Vert = \vert \mathit{a} \vert \Vert
-  \mathbf{P} \Vert$
-  \item $\Vert \mathbf{P + Q} \Vert \leq \Vert \mathbf{P} \Vert + \Vert
-  \mathbf{Q} \Vert$
-\end{enumerate}
-\end{mag_vectors}
-
-\newpage
-\subsection{Produs scalar}
-\label{ch1:sec_vectors:dot_product}
 \indent
 
-\textit{Produsul scalar} a doi vectori, numit si \textit{produs interior}, este
-una din cele mai folosite operații într-o aplicație 3D deoarere furnizează o
-măsură a diferenței dintre direcțiile a doi vectori.
-\newtheorem{def_dotproduct}{Definiția}
-\begin{def_dotproduct}
-Fiind dați doi vectori \textit{n}-dimensionali \textbf{P} și \textbf{Q},
-produsul scalar al acestora, notat cu $\mathbf{P} \cdot \mathbf{Q}$, este
-numărul real dat de formula
-\begin{equation}
-\label{eq:vec:8}
-\mathbf{P} \cdot \mathbf {Q} = \sum_{i = 1}^{n} P_iQ_i.
-\end{equation}
-\end{def_dotproduct}
-Această definiție spune că produsul scalar a doi vectori este dat de suma
-produselor componentelor vectorilor. In $\mathbf{R^3}$ avem
-\begin{equation}
-\label{eq:vec:9}
-\mathbf{P \cdot Q} = P_xQ_x + P_yQ_y + P_zQ_z.
-\end{equation}
-Produsul scalar mai poate fi exprimat și ca un produs de două matrici
-\begin{equation}
-\label{eq:vec:10}
-\mathbf{P^TQ} = [P_1 \quad P_2 \quad \dots \quad P_n]
-\begin{bmatrix}
-Q_1 \\
-Q_2 \\
-\vdots \\
-Q_n
-\end{bmatrix},
-\end{equation}
+Deoarece vectorii sunt un concept studiat în liceu/facultate, lucrarea nu mai 
+face o prezentare teoretică a conceptului. În schimb, acest capitol detaliază 
+modul în care acest concept este transpus în aplicație.
 
-\newtheorem{dotproduct_cosine}[vector_arith]{Teorema}
-\begin{dotproduct_cosine}
-Fiind dați doi vectori \textit{n}-dimensionali \textbf{P} și \textbf{Q},
-produsul lor scalar $\mathbf{P \cdot Q}$ satisface equația
-\begin{equation}
-\label{eq:vec:11}
-\mathbf{P \cdot Q} = \Vert P \Vert \Vert Q \Vert \cos \alpha,
-\end{equation}
-unde $\alpha$ este unghiul dintre cei doi vectori.
-\end{dotproduct_cosine}
-Din această teoremă rezultă că doi vectori sunt perpendiculari dacă și numai
-dacă produsul lor scalar este zero (funcția cosinus este zero la un unghi de 90
-de grade). Pe baza semnului produsului scalar se poate face o observație legată
-de cît de mult cei doi vectori indică direcții similare. Dacă considerăm un plan
-care trece prin origine și care este perpendicular pe vectorul respectiv, atunci
-orice vector care se situează pe aceeași parte a planului cu vectorul inițial va
-avea un produs scalar pozitiv cu el și viceversa.
+Librăria \textbf{gfx\_lib} conține clase pentru vectori cu 2, 3 și 4 componente, 
+corespunzînd vectorilor din $\mathbf{R^2, R^3, R^4}$. Clasele sunt clase template, 
+fiind parametrizate în funcție de tipul componentelor (numere intregi/numere 
+reale cu simpla/dublă precizie).
+Acest lucru permite folosirea de vectori ale căror elemente sunt numere reale, 
+stocate folosind reprezentare în virgulă mobila cu simplă/dublă precizie, fără a
+fi nevoie de duplicarea codului existent. În marea majoritate a cazurilor, 
+vectorii cu elemente reprezentate în virgulă mobilă cu simplă precizie sunt 
+alegerea cea mai buna. Sunt însă situații în care utilizarea reprezentării în 
+virgulă mobilă cu dublă precizie este de preferat.
+Fragmentele de cod prezintă clasa \textbf{vector3}, care
+abstractizează un vector cu 3 componente din $\mathbf{R^3}$. Clasele
+\textbf{vector2} si \textbf{vector4}, corespunzând vectorilor din 
+$\mathbf{R^2} \text{ și } \mathbf{R^4}$, sunt similare ca și design și 
+funcționalitate.
 
-\newtheorem{dotproduct_properties}[vector_arith]{Teorema}
-\begin{dotproduct_properties}
-Fie un scalar \textbf{a} și trei vectori \textbf{P, Q, R}. Atunci, următoarele
-proprietăți sunt adevărate :
-\begin{enumerate}
-  \item $\mathbf{P \cdot Q} = \mathbf{Q \cdot P}$ (comutativitatea produsului
-  scalar)
-  \item $(\mathit{a}\mathbf{P}) \cdot \mathbf{Q} = \mathit{a}(\mathbf{P \cdot
-  Q})$ (asociativitatea înmulțirii cu scalari)
-  \item $\mathbf{P} \cdot (\mathbf{Q + R}) = \mathbf{P \cdot Q + P \cdot R} $
-  (distributivitatea produsului scalar față de adunarea vectorilor)
-  \item $\mathbf{P \cdot P} = \Vert \mathbf{P} \Vert ^ 2$
-  \item $\mathbf{\vert P \cdot Q \vert} \leq \Vert P \Vert \Vert Q \Vert$
-\end{enumerate}
-\end{dotproduct_properties}
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+template<typename real_t>
+class vector3 {
+public:
+enum {
+    is_floating_point = math::fp_test<real_t>::result
+};
 
-Deseori apare situația în care trebuie să descompunem un vector \textbf{P} în
-componente care sunt paralele și perpendiculare cu un alt vector \textbf{Q}
-\todo{inserat figura + restul de formule care vin aici}
+union { struct {
+        real_t x_;
+        real_t y_;
+        real_t z_;
+    };
+    real_t elements_[3];
+};
+\end{lstlisting}
 
-\subsection{Produs vectorial}
-\label{ch1:sec_vectors:cross_product}
-\indent
+Membrul enumerator \textit{is\_floating\_point} este o constantă determinată la
+compilare, al carei rol este de a permite optimizarea unor operații în funcție
+de tipul componentelor (integer, float sau double). De exemplu, pentru valori
+floating point împărțirea nu se face în mod direct, ci se calculează inversul
+împărțitorului și se inmulțește deîmpărțitul cu această valoare.
+Motivul este eficiența : înmulțirea a două elemente floating point consumă mai puține
+cicluri de procesor față de o împărțire. Înainte de efectuarea operației de
+împărțire se aplică o transformare asupra împărțitorului. Pentru valori numere
+întregi, transformarea este funcția identică ($f(x) = x$) :
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+template<typename real_t, bool is_floating_point = false>
+struct transform_dividend_for_division {
+    static real_t transform(real_t dividend) {
+        return dividend;
+    }
+};
+\end{lstlisting} iar împărțirea se face în mod direct :
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+template<typename real_t, bool is_floating_point = false>
+struct divide_helper {
+    static real_t divide(real_t divided, real_t dividend) {
+        return divided / dividend;
+    }
+};
+\end{lstlisting}
 
-\textit{Produsul vectorial} a doi vectori tridimensionali întoarce un vector
-care este perpendicular pe cei voi vectori multiplicați. Această proprietate are
-multe utilizări într-o aplicație 3D, una din ele fiind o metodă de a calcula
-normalul la suprafață intr-un anumit punct al ei, dîndu-se doi vectori distincți
-și tangenți.
-
-\newtheorem{crossproduct_def}[def_dotproduct]{Definiția}
-\begin{crossproduct_def}
-Se numește produs vectorial a doi vectori tridimensionali \textbf{P, Q} și se
-notează cu \textbf{P $\times$ Q}, vectorul dat de formula
-\begin{equation}
-\label{eq:vec:12}
-\mathbf{P \times Q} = \langle P_yQ_z - P_zQ_y, P_zQ_x - P_xQ_z, P_xQ_y - P_yQ_x
-\rangle.
-\end{equation}
-\end{crossproduct_def}
-O metodă utilă pentru reținerea acestei formule este de a calcula produsul
-vectorial prin evaluarea pseudo-determinantului
-\begin{equation}
-\begin{vmatrix}
-i & j & k \\
-P_x & P_y & P_z \\
-Q_x & Q_y & Q_z
-\end{vmatrix},
-\end{equation} unde \textit{i}, \textit{j}, \textit{k} sunt vectorii unitate
-paraleli cu axele \textit{Ox, Oy, Oz}.
-
-\indent
-Ca și produsul scalar, produsul vectorial are semnificație trigonometrică.
-
-\newtheorem{crossproduct_trig}[vector_arith]{Teorema}
-\begin{crossproduct_trig}
-Oricare ar fi doi vectori $\mathbf{P, Q \in R^3}$, produsul vectorial
-$\mathbf{P \times Q}$ verifică ecuația
-\begin{equation}
-\label{eq:vec:13}
-\Vert P \times Q \Vert = \Vert P \Vert \Vert Q \Vert \sin \alpha,
-\end{equation} unde $\alpha$ reprezintă unghiul dintre vectorii \textbf{P, Q}.
-\end{crossproduct_trig}
-\todo {figura de inserat aici}
-
-\newtheorem{crossproduct_properties}[vector_arith]{Teorema}
-\begin{crossproduct_properties}
-\label{cross_properties}
-Oricare ar fi doi scalari $\mathit{a, b} \in \mathbf{R}$ si oricare trei vectori
-$\mathbf{P, Q, R} \in \mathbf{R^3}$, următoarele proprietăți sunt verificate.
-\begin{enumerate}
-  \item $Q \times P = -(P \times Q)$ (anticomutativitate)
-  \item $(\mathit{a}P) \times Q = \mathit{a}(P \times Q)$
-  \item $P \times (Q + R) = P \times Q + P \times R$
-  \item $P \times P = \langle 0, \quad 0, \quad 0 \rangle$
-  \item $\Vert P \times Q \Vert ^ 2 = \Vert P \Vert ^ 2 \Vert Q \Vert ^ 2 - (P
-  \cdot Q) ^ 2$ (identitatea Lagrange)
-  \item produsul vectorial a doi vectori este nul dacă și numai dacă cei doi
-  vectori sunt coliniari; dacă vectorii nu sunt coliniari, atunci norma
-  produsului vectorial este egală cu aria paralelogramului construit pe
-  reprezentanții cu origine comună ai celor doi vectori.
-\end{enumerate}
-\end{crossproduct_properties}
-
-Ca și o consecință a teoremei \ref{cross_properties}, punctul 6, 
-aria unui triunghi arbitrar ale cărui vertice sunt date de punctele
-$\mathbf{V_0, V_1, V_2}$ poate fi calculată după formula
-\begin{equation}
-\label{eq:vec:cross_tri_area}
-A = \frac{1}{2} \Vert (V_1 - V_0) \times (V_2 - V_0) \Vert
-\end{equation}
-
-\subsection{Dublu produs vectorial}
-\label{ch1:sec_vectors:sub_double_cross_product}
-\indent
-
-Fiind dați vectorii $\mathbf{P, Q, R}$, vectorul \textbf{W} = $\mathbf{P
-\times (Q \times R)}$ este dublul produs vectorial al acestor vectori.
-Expresia dublului produs vectorial se reține mai ușor scrisă sub forma
-pseudo-determinantului
-\begin{equation}
-\label{eq:vec:double_vector_product}
-\mathbf{P \times (Q \times R)} = 
-\begin{vmatrix}
-Q & R \\
-(P, Q) & (P, R)
-\end{vmatrix}.
-\end{equation}
-
-\subsection{Produs mixt}
-\label{ch1:sec_vectors:sub_mixed_product}
-\indent
-
-Fiind dați vectorii $\mathbf{P, Q, R}$, scalarul \textbf{W} = $\mathbf{P
-\cdot (Q \times R)}$ se numește produsul mixt al acestor vectori. Dacă vectori
-sunt necoplanari, atunci modulul produsului mixt este egal cu volumul
-paralelipipedului ce se poate construi pe reprezentanții cu origine comună ai
-celor trei vectori.
-\todo{Figura de introdus aici}
-
-\newtheorem{mixed_product}[vector_arith]{Teorema}
-\begin{mixed_product}
-Următoarele proprietăți sunt adevărate pentru produsul mixt a trei vectori
-\textbf{P, Q, R}.
-\begin{enumerate}
-  \item $(P, Q \times R) = (R, Q \times P) = (Q, R \times P)$
-  \item $(P, Q \times R) = -(P, R \times Q)$
-  \item $(tP, Q \times R) = (P, tQ \times R) = (P, Q \times tR), \forall t \in
-  \mathbf{R}$
-  \item $(P_1 + P_2, Q \times R) = (P_1, Q \times R) + (P_2, Q \times R)$
-  \item $(P \times Q, R \times S) =
-  \begin{vmatrix}
-  (P, R) & (P, S) \\
-  (Q, R) & (Q, S)
-  \end{vmatrix} 
-  $ (identitatea Lagrange)
-  \item $(P, Q \times R) = 0$ dacă și numai dacă
-  \begin{itemize}
-    \item[(i)] cel puțin unul dintre vectorii \textbf{P, Q, R} este nul;
-    \item[(ii)] doi dintre vectori sunt coliniari;
-    \item[(iii)] vectorii \textbf{P, Q, R} sunt coplanari. 
-  \end{itemize}
-\end{enumerate}
-\end{mixed_product}
-
-Produsul mixt a trei vectori \textbf{P, Q, R} poate fi calculat mai ușor prin
-evaluarea determinantului 
-$
-\begin{vmatrix}
-P_x & P_y & P_z \\
-Q_x & Q_y & Q_z \\
-R_x & R_y & R_z
-\end{vmatrix}
-$.
-
-\subsection{Reprezentarea conceptului de vector in codul aplicației}
-\label{ch1:sec_vectors:sub_vector_cpp_impl}
-\indent
-
-Odată introdusă reprezentarea matematică a conceptului de vector, este momentul
-sa vedem cum este transpus acest concept în cod. Librăria \textbf{gfx\_lib}
-conține clase pentru vectori cu 2, 3 și 4 componente, corespunzînd vectorilor
-din $\mathbf{R^2, R^3, R^4}$. Clasele sunt clase template, fiind parametrizate
-în funcție de tipul componentelor (numere intregi/reale).
-Urmează cîteva fragmente de cod din implementarea clasei \textbf{vector3}, care
-abstractizează un vector cu 3 componente din $\mathbf{R^3}$ (clasele
-\textbf{vector2} si \textbf{vector4} sunt similare).
-
-\todo{Codul sursa pt listing mai trebuie rearanjat / scurtat}
-\lstinputlisting[
-    caption = Reprezentarea in cod a conceptului de vector,
-    label=lst:vec:vec4_class,
-    linerange={1-141}]{./capitolul1/source_code/vector3.h.src}
+Pentru valori floating point, transformarea este funcția inversă
+($f(x) = \frac{1}{x}$) :
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+template<typename real_t>
+struct transform_dividend_for_division<real_t, true> {
+    static real_t transform(real_t dividend) {
+        return real_t(1) / dividend;
+    }
+};
+\end{lstlisting} iar rezultatul operației este calculat prin înmulțire cu inversa :
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+    ]
+template<typename real_t>
+struct divide_helper<real_t, true> {
+    static real_t divide(real_t divided, real_t inv) {
+        return divided * inv;
+    }
+};
+\end{lstlisting}
 
 Variabilele membre care reprezintă componentele vectorului sunt declarate în
 partea publică a clasei. Am ales această opțiune deoarece a implementa
@@ -362,144 +128,150 @@ neinițializate. Constructorul ar putea ințializa toate elementele la zero, dar
 asta ar însemna timp suplimentar, care poate deveni semnificativ atunci cînd 
 avem de-a face cu array-uri de dimensiuni mai mari. În plus, în majoritatea
 cazurilor, imediat după inițializare, obiectele vor primi alte valori. Pentru
-cazul în care se dorește inițializarea cu anumite valori specifice există mai mulți
-constructori. Clasa oferă operatori și funcții non-membre pentru toate
-operațiile cu vectori introduse în capitolele anterioare.
+cazul în care se dorește inițializarea cu anumite valori specifice există mai 
+mulți constructori supraîncărcați.
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single]
+template<typename real_t>
+class vector {
+    vector3() {}
+    vector3(real_t x, real_t y, real_t z) 
+        : x_(x), y_(y), z_(z) {}
+    vector3(const real_t* input, size_t count);
+};
+\end{lstlisting}
+Clasa implementează toate operațiile aritmetice ce se pot aplica vectorilor :
+\begin{easylist}[itemize]
+\ListProperties(Numbers1=a)
+@ înmulțirea/împărțirea cu scalari 
+\begin{lstlisting}
+template<typename real_t>
+inline
+gfx::vector3<real_t>&
+gfx::vector3<real_t>::operator *=(real_t k) {
+    x_ *= k; y_ *= k; z_ *= k;
+    return *this;
+}
 
-\todo{Mutat înainte de vectori ??}
-\subsection{Spații vectoriale}
-\label{ch1:sec_vectors:sub_vector_spaces}
-Tra la la
-\subsubsection{Grupuri}
-\label{ch1:sec_vectors:sub_vector_spaces:sub_sub_groups}
-\indent
+template<typename real_t>
+inline
+gfx::vector3<real_t>&
+gfx::vector3<real_t>::operator /=(real_t k) {
+    using namespace implementation_details;
+    const real_t dividend = transform_dividend_for_division<
+        real_t, 
+        is_floating_point
+    >::transform(k);
 
-Prin \textit{structură algebrică} înțelegem o mulțime pe care s-au definit un
-număr finit de legi de compoziție și de relații, împreună cu proprietățile lor.
-O lege de compiziție poate fi o operație unară, binară, \textit{n}-ară.
-Înainte de a defini spațiile vectoriale este util să prezentăm noțiunile de grup
-și câmp.
+    divide_helper<
+        real_t,
+        is_floating_point
+    > div_helper;
 
-\indent
-Fie \textit{G} o mulțime nevidă. O funcție definită pe $\mathit{G \times G}$ și
-cu valori în \textit{G} se numește \textit{operație binară pe G}. O operație
-binară pe \textit{G} se notează cu *, valoarea ei se notează cu $\mathit{g_1 *
-g_2}$ și se citește „$\mathit{g_1}$ compus cu $\mathit{g_2}$”.
+    x_ = div_helper(x_, dividend);
+    y_ = div_helper(y_, dividend);
+    z_ = div_helper(z_, dividend);
+    return *this;
+}
+\end{lstlisting}
+@ adunarea și scăderea vectorilor
+\begin{lstlisting}
+template<typename real_t>
+inline gfx::vector3<real_t>&
+gfx::vector3<real_t>::operator+=(
+    const vector3<real_t>& rhs
+    ) 
+{
+    x_ += rhs.x_; y_ += rhs.y_; z_ += rhs.z_;
+    return *this;
+}
+\end{lstlisting}
 
-\newtheorem{def_group}[def_dotproduct]{Definiția}
-\begin{def_group}
-O mulțime G împreună cu o operație binară * pe G și care satisface condițiile :
-\begin{enumerate}[(a)]
-  \item $\forall g_1, g_2, g_3 \in G, \quad g_1 * (g_2 * g_3) = (g_1 * g_2) *
-  g_3$ (asociativitate),
-  \item $\exists e \in G, \quad \forall g \in G, \quad e * g = g * e = g$
-  (element neutru),
-  \item $\forall g \in G, \quad \exists g' \in G, \quad g * g' = g' * g = e$
-  (element simetric) \end{enumerate} se numește grup.
-\end{def_group}
-Un grup se notează prin (G, *) soar doar prin G, caz în care operația se deduce
-din context.
-Dacă $\forall g_1, g_2 \in G, \quad g_1 * g_2 = g_2 * g_1$ (comutativitate),
-atunci grupul G se numește \textit{grup comutativ sau abelian}.
+@ determinarea magnitudinii și normalizarea unui vector
+\begin{lstlisting}
+template<typename real_t>
+inline real_t
+gfx::vector3<real_t>::sum_components_squared() const {
+    return x_ * x_ + y_ * y_ + z_ * z_;
+}
 
-\newtheorem{def_isomorph}[def_dotproduct]{Definiția}
-\begin{def_isomorph}
-Fie $(G_1, *), \quad (G_2, \circ)$ două grupuri. O funcție $\phi : G_1
-\rightarrow G_2$ care verifică relația $\phi(g_1 * g_2) = \phi(g_1) \quad \circ \quad
-\phi(g_2), \quad \forall g_1, g_2 \in G_1$ se numește homomorfism. Un
-homomorfism bijectiv se numește izomorfism.
-\end{def_isomorph}
+template<typename real_t>
+inline real_t
+gfx::vector3<real_t>::magnitude() const {
+    return std::sqrt(sum_components_squared());
+}
 
-\newtheorem{def_field}[def_dotproduct]{Definiția}
-\begin{def_field}
-O mulțime K, împreună cu două aplicații ale lui $K \times K \rightarrow K$,
-numite adunare, respectiv înmulțire și care verifică cerințele :
-\begin{enumerate}
-  \item adunarea determină pe K o structura de grup abelian
-  \item înmulțirea determină pe K - $\lbrace 0 \rbrace$ o structură de grup
-  \item înmulțirea este distributivă față de adunare
-\end{enumerate} se numește corp. Un corp pentru care operația de înmulțire
-verifică și condiția de comutativitate se numește câmp.
-\end{def_field}
+template<typename real_t>
+inline gfx::vector3<real_t>& gfx::vector3<real_t>::normalize() {
+    float magn(magnitude());
+    if (math::is_zero(magn)) {
+        x_ = y_ = z_ = real_t(0);
+    } else {
+        *this /= magn;
+    }
+    return *this;
+}
+\end{lstlisting}
 
-\subsubsection{Spații vectoriale}
-\label{ch1:sec_vectors:sub_vector_spaces:sub_sub_vectorspaces}
-Structura de spațiu vectorial constă dintr-un grup aditiv comutativ \textbf{V},
-un câmp \textbf{K} și o înmulțire definită pe $\mathbf{K \times V} \rightarrow
-\mathbf{V}$, care verifică patru axiome.
-\newtheorem{def_vectorspaces}[def_dotproduct]{Definiția}
-\begin{def_vectorspaces}
-Mulțimea \textbf{V} se numește spațiu vectorial peste câmpul \textbf{K} daca
-admite
-\begin{enumerate}
-  \item o structură de grup comutativ, notată aditiv, $(v, w) \rightarrow v
-  + w$
-  \item o funție $f : \mathbf{K \times V} \rightarrow V, \quad f(k, v) = kv$,
-  astfel încât $\forall k, l \in \mathbf{K}, \quad \forall v, w \in \mathbf{V}$
-  să avem : \begin{center}
-  $1v = v$ \\ $k(lv) = (kl)v$ \\ $(k + l)v = kv + lv$ \\ $k(v + w) = kv + kw$
-  \end{center}  
-\end{enumerate}
-\end{def_vectorspaces}
-Elementele lui \textbf{V} se numesc vectori, elementele lui \textbf{K}
-se numesc scalari, iar aplicația \textit{f} înmulțirea vectorilor cu scalari.
+@ produs scalar și produs vectorial
 
-Fie \textbf{V} un spațiu vectorial pe câmpul \textbf{K} și \textbf{S} o
-submulțime a sa.
-\newtheorem{th_liniar_independent}[def_dotproduct]{Definiția}
-\begin{th_liniar_independent}
-Mulțimea \textbf{S} se numește liniar independentă dacă pentru orice alegere a n
-elemente din \textbf{S}, respectiv \textbf{K}, relația $\sum_{i = 1}^{n}s_ik_i$
-implică faptul că scalarii $k_1 = k_2 = \dots = k_n = 0$. În caz contrar se
-spune că multimea \textbf{S} este liniar dependentă.
-\end{th_liniar_independent}
+\begin{lstlisting}
+template<typename real_t>
+inline real_t gfx::dot_product(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    ) {
+    return lhs.x_ * rhs.x_ + lhs.y_ * rhs.y_ + lhs.z_ * rhs.z_;
+}
 
-\newtheorem{th_liniar_comb}[def_dotproduct]{Definiția}
-\begin{th_liniar_comb}
-Spunem că un vector $x \in \mathbf{V}$ este o combinație liniară de vectorii
-$v_1, v_2, \dots v_n$ dacă există scalarii $k_1, k_2, \dots, k_n \in \mathbf{K}$
-astfel încât $x = \sum_{i = 1}^{n} k_iv_i$.
-\end{th_liniar_comb}
+template<typename real_t>
+inline gfx::vector3<real_t> gfx::cross_product(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    ) {
+    return vector3<real_t>(
+        lhs.y_ * rhs.z_ - lhs.z_ * rhs.y_,
+        lhs.z_ * rhs.x_ - lhs.x_ * rhs.z_,
+        lhs.x_ * rhs.y_ - lhs.y_ * rhs.x_
+        );
+}
+\end{lstlisting}
 
-\newtheorem{th_generator}[def_dotproduct]{Definiția}
-\begin{th_generator}
-Spunem că vectorii $v_1, v_2, \dots, v_n$ formează un sistem de generatori
-pentru spațiul vectorial \textbf{V} dacă $\forall x \in \mathbf{V}, \quad
-\exists k_1, k_2, \dots, k_n \in \mathbf{K}$ astfel încât $x = \sum_{i
-= 1}^{n}v_ik_i$.
-\end{th_generator}
+@ proiecția unui vector pe un alt vector
 
-\newtheorem{th_vector_basis}[def_dotproduct]{Definiția}
-\begin{th_vector_basis}
-Fie \textbf{V} un spațiu vectorial peste un câmp \textbf{K}. Un sistem $B = (
-e_1, e_2, \dots, e_n )$ de vectori din \textbf{V}, $1 \leq i \leq n$, se 
-numește bază a lui \textbf{V}, dacă :
-\begin{enumerate}
-  \item orice vector din \textbf{V} se poate scrie ca o combinație liniară de
-  vectorii bazei \textbf{B} (\textbf{B} este un sistem de generatori pentru
-  spațiul vectorial \textbf{V}).
-  \item \textbf{B} este un sistem de vectori liniar independent.
-\end{enumerate}
-\end{th_vector_basis}
+\begin{lstlisting}
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+gfx::project_vector_on_vector(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    )
+{
+    return (dot_product(lhs, rhs) 
+            / rhs.sum_components_squared()) * rhs;
+}
 
-Dacă pentru orice pereche de elemente ale unei baze, de forma $(e_i, e_j), i
-\neq j$, se verifică relația $e_i \cdot e_j = 0$, atunci baza se numește
-ortogonală.
+template<typename real_t>
+inline
+gfx::vector3<real_t>
+gfx::project_vector_on_unit_vector(
+    const gfx::vector3<real_t>& lhs, 
+    const gfx::vector3<real_t>& rhs
+    )
+{
+    dot_product(lhs, rhs) * rhs;
+}
+\end{lstlisting}
 
-Fie simbolul $\delta$ al lui Kronecker, definit ca 
-\begin{equation}
-\delta_{ij} =
-\begin{cases}
-1, & \text{dacă } i = j, \\
-0, & \text{dacă } i \neq j 
-\end{cases}
-\end{equation}
-Atunci, daca pentru orice pereche de elemente ale unei baze, de forma $(e_i,
-e_j)$, este adevarată relația $e_i \cdot e_j = \delta_{ij}$, baza se numește
-ortonormală.
+\end{easylist}
 
 \subsubsection{Ortogonalizare Gram-Schmidt}
-\label{ch1:sec_vectors:sub_vector_spaces:sub_sub_gram_schmidt}
+\label{ch1:sec_vectors:sub_gram_schmidt}
 Procedeul de ortogonalizare Gram-Schmidt este un algoritm care primește ca și
 input un set de vectori liniar independenți și produce ca și rezultat un set de
 vectori ortogonali.

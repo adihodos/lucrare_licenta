@@ -9,7 +9,8 @@ fi utilizați pentru a roti puncte în jurul unor axe arbitrare.
 Quaternionii au o serie de avantaje față de matrici. De exemplu, pentru
 stocarea unui quaternion sunt nevoie doar de patru componente, concatenarea lor
 implică mai puține operații aritmetice și sunt mai ușor de interpolat pentru a
-produce animații. Utilizarea lor în grafica 3D a fost pionierată de Shoemake.
+produce animații. Utilizarea lor în grafica 3D a fost pionierată de
+\todo{inserat referinta} Shoemake.
 
 \todo{Schimbat titlul}
 \subsection{Proprietățile quaternionilor}
@@ -105,6 +106,22 @@ Proprietățile adunării quaternionilor :
     \langle 0, 0, 0, 0 \rangle$
 \end{enumerate}
 
+\subsection{Opusul unui quaternion}
+Opusul unui quaternion are o proprietate interesantă. Deși la prima vedere s-ar
+părea că el anulează rotația aplicată de quaternionul original, 
+rotația prin opusul quaternionului se efectuează în jurul axei negative. 
+Rezultatul este că un vector rotit printr-un quaternion sau opusul acelui 
+quaternion ajunge tot în aceeași poziție. Diferența este că în timp ce 
+quaternionul original aplică o rotație de $\theta$ radiani în jurul
+unei axe $\mathbf{\hat{r}}$, opusul său aplică o rotație de $2\pi - \theta$
+radiani în jurul axei $\mathbf{-\hat{r}}$.
+\begin{figure}
+\includegraphics{quaternion_rotation.eps}
+\caption{Rotirea unui vector printr-un quaternion $q$ (stânga) și prin opusul său
+$-q$ (dreapta).}
+\label{fig:quat_rotation}
+\end{figure}
+
 \subsection{Magnitudinea unui quaternion}
 \label{ch1:quaternions:magnitude}
 Similar cu vectorii, magnitudinea unui quaternion este dată de formula
@@ -183,9 +200,11 @@ Produsul scalar mai verifică și următoarele relații :
 \end{enumerate}
 \todo{Verificat chestia asta din VanVerth}
 Produsul scalar a doi quaternioni dă o masură a diferenței dintre rotațiile
-aplicate de cei doi quaternioni. Cand acesta ia valori apropiate de 1, cei doi
-quaternioni aplică rotații similare. Cand ia valori apropiate de -1, rotațiile
-aplicate sunt foarte diferite.
+aplicate de cei doi quaternioni. Presupunând că quaternionii sunt normalizați,
+când produsul ia valori apropiate de 1 sau -1, cei doi quaternioni aplică 
+rotații similare. În consecință, quaternioni normalizați al căror produs ia
+valori apropiate de 0 produc rotații  forte diferite. Iată și implementarea
+produsului scalar în cod :
 
 \begin{lstlisting}[
     title={Cod C++}, 
@@ -204,6 +223,91 @@ gfx::dot_product(
 {
     return lhs.x_ * rhs.x_ + lhs.y_ * rhs.y_ 
            + lhs.z_ * rhs.z_ + lhs.w_ * rhs.w_;
+}
+\end{lstlisting}
+
+\subsection{Conversia între formate}
+Dându-se un unghi de rotație $\theta$ și o axă de rotație $\hat{r}$, conversia de 
+la formatul axă-unghi la quaternion este dată de formula :
+\begin{equation}
+q = \left\lbrack \cos\left(\frac{\theta}{2}\right), 
+    \hat{r}\sin\left(\frac{\theta}{2}\right) \right\rbrack 
+\end{equation}
+Pentru a converti de la quaternion (normalizat) la format axă-unghi se 
+determină mai intâi unghiul de rotație :
+\[
+w = \cos\left(\frac{\theta}{2}\right) \rightarrow \theta = 2\arccos\left(w\right)
+\]
+Cum pentru un quaternion normalizat avem $w^2 + v \cdot v = 1$, rezultă că
+$\Vert v \Vert = \sqrt{1 - w^2}$. Atunci, vectorul care dă axa de rotație se 
+determină astfel :
+\[
+\hat{r} = \frac{v}{\Vert v \Vert}
+\]
+
+Matricea pătratică de ordinul trei care aplică aceeași rotație ca și un 
+quaternion $q$ este dată de formula :
+\begin{equation}
+\mathbf{M}_{q} = 
+\begin{bmatrix}
+1 - 2y^2 - 2z^2 & 2xy - 2wz         & 2xz + 2wy \\
+2xy + 2wz       & 1 - 2x^2 - 2z^2   & 2yz - 2wx \\
+2xz - 2wy       & 2yz + 2wx         & 1 - 2x^2 - 2y^2
+\end{bmatrix}
+\end{equation}
+Dacă quaternionul nu este normalizat, matricea trebuie scalată cu
+\[
+\frac{1}{w^2 + x^2 + y^2 + z^2}
+\]
+Codul care realizează conversia de la quaternion la matrice de rotație este
+implementat pe baza articolelor \cite{Shoemake95} și \cite{Shoemake89} :
+\begin{lstlisting}[
+    title={Cod C++}, 
+    xleftmargin=2pt,
+    abovecaptionskip=2pt,
+    belowcaptionskip=2pt,
+    frame=single
+]
+template<typename real_t>
+gfx::quaternion<real_t>&
+gfx::quaternion<real_t>::to_rotation_matrix(
+    gfx::matrix_3X3<real_t>* mtx
+    ) const
+{
+    real_t s, xs, ys, zs, wx, wy, wz, xx, xy, xz, yy, yz, zz;
+
+    s = 2 / length_squared();
+
+    xs = s * x_;
+    ys = s * y_;
+    zs = s * z_;
+
+    wx = w_ * xs;
+    wy = w_ * ys;
+    wz = w_ * zs;
+
+    xx = x_ * xs;
+    xy = x_ * ys;
+    xz = x_ * zs;
+
+    yy = y_ * ys;
+    yz = y_ * zs;
+
+    zz = z_ * zs;
+
+    mtx->a11_ = real_t(1) - (yy + zz);
+    mtx->a12_ = xy - wz;
+    mtx->a13_ = xz + wy;
+
+    mtx->a21_ = xy + wz;
+    mtx->a22_ = real_t(1) - (xx + zz);
+    mtx->a23_ = yz - wx;
+
+    mtx->a31_ = xz - wy;
+    mtx->a32_ = yz + wx;
+    mtx->a33_ = real_t(1) - (xx + yy);
+
+    return *this;
 }
 \end{lstlisting}
 
@@ -271,6 +375,8 @@ gfx::operator*(
     return result;
 }
 \end{lstlisting}
+Ca și în cazul matricilor, concatenarea mai multor quaternioni va rezulta în 
+cumularea rotațiilor efectuate de quaternionii respectivi.
 
 \subsection{Conjugata unui quaternion}
 \label{ch1:quaternions:conjugate}
@@ -304,6 +410,17 @@ Dacă q este un \textit{quaternion de magnitudine unitate}, formula
 q^{-1} = \bar{q}.
 \end{equation}
 
+\begin{figure}
+\includegraphics{quaternion_inverted.eps}
+\caption{Relația dintre un quaternion și inversul său.}
+\end{figure}
+
+Practic, dacă un quaternion $q$ efectuează o rotație de $\theta$ radiani, 
+în sens trigonometric (sensul invers acelor de ceasornic), în jurul unei axe 
+$\hat{r}$, inversul său efectuează o rotație de $\theta$ radiani, în jurul 
+aceleiași axe $\hat{r}$, dar în sensul opus sensului trigonometric (sensul 
+acelor de ceasornic).
+
 \begin{lstlisting}[
     title={Cod C++}, 
     xleftmargin=2pt,
@@ -328,6 +445,6 @@ gfx::quaternion<real_t>& gfx::quaternion<real_t>::invert() {
 }
 \end{lstlisting}
 
+
 \subsection{Rotirea vectorilor}
 \label{ch1:quaternions:vector_rotation}
-Tra la la. Lorem dolor ipsicum si alte bazaconii de-astea. Test Test!!!.
