@@ -1,0 +1,53 @@
+\section{Spații afine. Puncte.}
+\label{ch1:affine_spaces}
+
+\newtheorem{th_affine_spaces}{Definiția}
+\begin{th_affine_spaces}
+Fie $V$ un spațiu vectorial peste un corp $K$ și $A$ o mulțime nevidă. Definim
+operația de adunare $p + a \in A$ pentru orive vector $a \in V$ și orice element
+$p \in A$ și care verifică relațiile :
+\begin{enumerate}
+  \item $p + \mathbf{0} = p$.
+  \item $(p + a) + b = p + (a + b)$.
+  \item Pentru orice $q \in A$ există un vector unic $a \in V$ astfel încât
+        $q = p + a$.
+\end{enumerate} (aici, $a, b \in V$). Atunci, $A$ se numește spațiu afin
+iar $K$ se numește corpul coeficienților \cite{WolframAlpha}.
+\end{th_affine_spaces}
+
+Într-un spațiu afin $A$ putem defini un punct fix $O$, numit \textit{origine}.
+Conform definiției de mai sus, putem scrie orice punct $P \in A$ sub forma
+\begin{equation}
+P = O + v
+\end{equation} unde $v$ este un vector în spațiul vectorial $V$. Dacă scriem
+vectorul $v$ ca și o combinație liniară de vectorii bazei lui $V$, atunci $P$
+poate fi scris in forma :
+\begin{equation}
+P = a_{0}v_{0} + a_{1}v_{1} + \cdots + a_{n}v_{n}
+\end{equation}
+Dacă $P_{0} \text{ și } P$ sunt două puncte dintr-un spațiu afin $A$, atunci
+putem exprima $P$ în funcție de $P_{0}$ :
+\begin{equation}
+\label{eq:combinatie_afina}
+P = a_{0}P_{0} + a_{1}P_{1} + \cdots + a_{n}P_{n}
+\end{equation} dacă coeficienții $a_{0} \cdots a_{n}$ verifică relația
+\begin{equation}
+\label{eq:coeff_sum}
+\sum_{i = 0}^{n}a_{i} = 1
+\end{equation}
+Ecuația \eqref{eq:combinatie_afina} se numește \textit{combinație afină}.
+Putem rescrie ecuația \eqref{eq:coeff_sum} în forma
+\begin{equation}
+a_{0} = 1 - a_{1} - a_{2} - \cdots - a_{n}
+\end{equation} și să înlocuim în ecuația \eqref{eq:combinatie_afina} pentru a
+obține :
+\begin{equation}
+P = P_{0} + a_{1}(P_{1} - P_{0}) + a_{2}(P_{2} - P_{0}) + \cdots +
+    a_{n}(P_{n} - P_{0})
+\end{equation}
+O combinație afină generează un spațiu afin, la fel cum o combinație liniară
+generează un spațiu vectorial. Dacă vectorii 
+$(P{_1} - P_{0}), \dots , (P_{n} - P_{0})$
+sunt liniar independenți, punctele $P_{0}, P_{1}, \dots , P_{n}$ se numesc
+\textit{afin independente} iar coeficienții combinației afine se numesc 
+\textit{coordonate baricentrice} .

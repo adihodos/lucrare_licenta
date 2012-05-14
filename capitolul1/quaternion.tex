@@ -10,7 +10,7 @@ Quaternionii au o serie de avantaje față de matrici. De exemplu, pentru
 stocarea unui quaternion sunt nevoie doar de patru componente, concatenarea lor
 implică mai puține operații aritmetice și sunt mai ușor de interpolat pentru a
 produce animații. Utilizarea lor în grafica 3D a fost pionierată de
-\todo{inserat referinta} Shoemake.
+Ken Shoemake.
 
 \todo{Schimbat titlul}
 \subsection{Proprietățile quaternionilor}
@@ -260,7 +260,7 @@ Dacă quaternionul nu este normalizat, matricea trebuie scalată cu
 \frac{1}{w^2 + x^2 + y^2 + z^2}
 \]
 Codul care realizează conversia de la quaternion la matrice de rotație este
-implementat pe baza articolelor \cite{Shoemake95} și \cite{Shoemake89} :
+implementat pe baza lucrărilor lui Ken Shoemake \cite{Shoemake85, Shoemake89} :
 \begin{lstlisting}[
     title={Cod C++}, 
     xleftmargin=2pt,

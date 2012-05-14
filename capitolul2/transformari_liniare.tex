@@ -1,0 +1,32 @@
+\section{Transformări liniare}
+\newtheorem{th_linear_transforms}{Definiția}
+\begin{th_linear_transforms}
+Fie V și W două spații vectoriale. O funcție $L : V \rightarrow W$ se numește
+transformare liniară dacă verifică relațiile :
+\begin{easylist}
+\ListProperties(Margin=1cm,Hang1=true)
+@ $L(v_{1} + v_{2}) = L(v_{1}) + L(v_{2})$, pentru oricare doi vectori 
+    $v_{1}, \quad v_{2} \in V$.
+@ $L(\alpha v) = \alpha L(v)$, pentru orice vector $v \in V$ și orice scalar 
+$\alpha$.    
+\end{easylist}
+\end{th_linear_transforms}
+Transformările liniare sunt convenient de utilizat pentru că au o reprezentare
+care le face ușor de implementat și calculat într-un program. Când cele două
+spații vectoriale V și W sunt \textit{finit dimensionale}, o transformare 
+liniară poate fi exprimată ca o multiplicare de matrici. 
+Fie $\{v_{1}, \dots , v_{m}\}$ și $\{w_{1}, \dots , w_{n}\}$ bazele ortonormate ale
+spațiilor vectoriale V și W și între care există o operație de produs interior. 
+Atunci, matricea corespunzătoare transformării T este :
+\begin{equation}
+A = (a_{ij}) = \langle w_{i}, T(v_{j}) \rangle
+\end{equation}
+Dacă vectorul $w \in W$ este rezultatul aplicării transformării liniare $L$ 
+asupra vectorului $v \in V$ iar $A$ este matricea acestei transformări, mai
+putem scrie :
+\begin{equation}
+w = Av
+\end{equation}
+Când cele două spații vectoriale $V, W$ au aceeași dimensionalitate este posibil
+ca transformarea $L$ să fie inversabilă, adică să existe o transformare $L^{-1}$
+astfel încât $LL^{-1} = I$.

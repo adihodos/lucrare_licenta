@@ -18,17 +18,22 @@
 		<link>
 			<name>.tex</name>
 			<type>1</type>
-			<location>C:/opt/utils/miktex_29/tex/latex/tools/.tex</location>
+			<location>/home/adi.hodos/Documents/C::/opt/utils/miktex_29/tex/latex/tools/.tex</location>
 		</link>
 		<link>
 			<name>cap.tex</name>
 			<type>1</type>
-			<location>C:/opt/utils/miktex_29/tex/generic/c-pascal/cap.tex</location>
+			<location>/home/adi.hodos/Documents/C::/opt/utils/miktex_29/tex/generic/c-pascal/cap.tex</location>
+		</link>
+		<link>
+			<name>q.tex</name>
+			<type>1</type>
+			<location>/usr/local/texlive/2011/texmf-dist/tex/latex/tools/q.tex</location>
 		</link>
 		<link>
 			<name>s.tex</name>
 			<type>1</type>
-			<location>C:/opt/utils/miktex_29/tex/latex/tools/s.tex</location>
+			<location>/home/adi.hodos/Documents/C::/opt/utils/miktex_29/tex/latex/tools/s.tex</location>
 		</link>
 	</linkedResources>
 </projectDescription>
